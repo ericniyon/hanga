@@ -1,0 +1,387 @@
+@extends('layouts.master')
+@section('title', 'Homepage')
+@section('page-header')
+    <!--begin::Subheader-->
+
+    <!--end::Subheader-->
+@stop
+@section('content')
+    <!--begin::Entry-->
+    <div class="d-flex flex-column-fluid">
+        <!--begin::Container-->
+        <div class="container">
+            <!--begin::Dashboard-->
+            <!--begin::Row-->
+            <div class="row">
+
+                <div class="col-md-7">
+                    <div class="row" style="background: #F9F9F9; padding:2rem ">
+                        <div class="col-md-4">
+                            <div class="card card-custom gutter-b" style="height: 130px">
+                                <!--begin::Body-->
+                                <div class="card-body d-flex flex-column bg-[#FFF0E2]"
+                                    style="background: #FFF0E2; color:#F5841F">
+                                    <!--begin::Stats-->
+                                    <div class="flex-grow-1">
+                                        <div class=" text-[#F5841F] font-weight-bold">Total iWorkers</div>
+                                        <div class="font-weight-bolder font-size-h3 py-2 ">
+                                            {{ approvedRegistrationType(\App\Models\RegistrationType::iWorker) }}</div>
+                                    </div>
+                                    <!--end::Stats-->
+                                    <!--begin::Progress-->
+                                    <span class="my-4 items-center flex"> <i class="fa fa-check-circle fa-1x bg-[#4FB95A]"
+                                            style="color: #4FB95A"></i> Verified </span>
+
+                                    <!--end::Progress-->
+                                </div>
+                                <!--end::Body-->
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card card-custom gutter-b" style="height: 130px">
+                                <!--begin::Body-->
+                                <div class="card-body d-flex flex-column bg-[#FFF0E2]"
+                                    style="background: #FFF0E2; color:#F5841F">
+                                    <!--begin::Stats-->
+                                    <div class="flex-grow-1">
+                                        <div class=" font-weight-bold">Total Busness Directory</div>
+                                        <div class="font-weight-bolder font-size-h3">
+                                            {{ approvedRegistrationType(\App\Models\RegistrationType::MSME) }}</div>
+                                    </div>
+                                    <!--end::Stats-->
+                                    <!--begin::Progress-->
+                                    <span class="my-4 items-center flex"> <i class="fa fa-check-circle fa-1x bg-[#4FB95A]"
+                                            style="color: #4FB95A"></i> Verified </span>
+                                    <!--end::Progress-->
+                                </div>
+                                <!--end::Body-->
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card card-custom gutter-b" style="height: 130px">
+                                <!--begin::Body-->
+                                <div class="card-body d-flex flex-column bg-[#FFF0E2]"
+                                    style="background: #FFF0E2; color:#F5841F">
+                                    <!--begin::Stats-->
+                                    <div class="flex-grow-1">
+                                        <div class=" font-weight-bold">Digital Service Providers</div>
+                                        <div class="font-weight-bolder font-size-h3">
+                                            {{ approvedRegistrationType(\App\Models\RegistrationType::DSP) }}</div>
+                                    </div>
+                                    <!--end::Stats-->
+                                    <!--begin::Progress-->
+                                    <span class="my-4 items-center flex"> <i class="fa fa-check-circle fa-1x bg-[#4FB95A]"
+                                            style="color: #4FB95A"></i> Verified </span>
+                                    <!--end::Progress-->
+                                </div>
+                                <!--end::Body-->
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row mt-12" style="background: #FBFBFB">
+                        <div class="col-12">
+                            <!--begin::Advance Table Widget 2-->
+                            <div class="card card-custom card-stretch gutter-b">
+                                <!--begin::Header-->
+                                <div class="card-header border-0 pt-5">
+                                    <h3 class="card-title align-items-start flex-column">
+                                        <span class="card-label font-weight-bolder text-dark">Registered Members in
+                                            {{ now()->year }}</span>
+                                    </h3>
+                                </div>
+                                <!--end::Header-->
+                                <!--begin::Body-->
+                                <div class="card-body pt-3 pb-0">
+                                    <!--begin::Table-->
+                                    <canvas id="chart_12" class="d-flex justify-content-center" style="min-height: 400px;">
+
+                                    </canvas>
+                                    <!--end::Table-->
+                                </div>
+                                <!--end::Body-->
+                            </div>
+                            <!--end::Advance Table Widget 2-->
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="col-md-4 offset-1 bg-[] p-12 " style="background: #FBFBFB">
+                    <span class="py-12"> Up coming Opportunities & Events</span>
+                    <!--begin::Tiles Widget 4-->
+                    @foreach ($upcomingEvents as $event)
+                        <div class="card card-custom gutter-b mt-12">
+                            <!--begin::Body-->
+                            <div class="card-body d-flex flex-column">
+                                <!--begin::Stats-->
+                                <div class="flex-grow-1">
+                                    <div class="text-dark-50 font-weight-bold mb-2" style="text-transform: uppercase">
+                                        {{ $event->company }}
+                                    </div>
+                                    <span class="text-muted" style="font-size: .9rem">
+                                        {{ $event->title }}
+                                    </span>
+
+                                </div>
+                                <div class="row justify-center my-2">
+                                    <div class="col-md-{{ $event->is_free ? '6' : '3' }}"><span>40 Slots</span></div>
+                                    {{-- <div class="col-md-4"><span>9 Remain</span></div> --}}
+                                    @if (!$event->is_free)
+                                        <div class="col-md-4"><span>{{ format_money($event->price) }}</span></div>
+                                    @endif
+                                    <div class="col-md-5">
+
+                                        @php
+                                            $progress = (strtotime($event->created_at) * 100) / strtotime($event->start_date);
+                                            // echo $progress;
+                                        @endphp
+
+                                        <span>{{ \Carbon\Carbon::parse($event->start_date)->longAbsoluteDiffForHumans() }}
+                                            Remain</span>
+                                        <div class="progress progress-xs my-.5">
+                                            <div class="progress-bar bg-[#FF8C8C]" role="progressbar"
+                                                style="width: {{ $progress }}%;" aria-valuenow="{{ $progress }}"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Stats-->
+                                <!--begin::Progress-->
+
+                                <!--end::Progress-->
+                            </div>
+                            <!--end::Body-->
+                        </div>
+                    @endforeach
+                    {{--
+                    <div class="card card-custom gutter-b mt-12" style="height: 130px">
+                        <!--begin::Body-->
+                        <div class="card-body d-flex flex-column">
+                            <!--begin::Stats-->
+                            <div class="flex-grow-1">
+                                <div class="text-dark-50 font-weight-bold">FABLAB</div>
+                                <p>3D Printing/ Additive Manufacturing</p>
+
+                            </div>
+                            <div class="row justify-center my-2">
+                                <div class="col-md-3"><span>40 Slots</span></div>
+                                <div class="col-md-4"><span>9 Remain</span></div>
+                                <div class="col-md-5">
+                                    <span>2weeks Remain</span>
+                                    <div class="progress progress-xs my-.5">
+                                <div class="progress-bar bg-[#FF8C8C]" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                                </div>
+                            </div>
+                            <!--end::Stats-->
+                            <!--begin::Progress-->
+
+                            <!--end::Progress-->
+                        </div>
+                        <!--end::Body-->
+                    </div>
+
+                    <div class="card card-custom gutter-b mt-12" style="height: 130px">
+                        <!--begin::Body-->
+                        <div class="card-body d-flex flex-column">
+                            <!--begin::Stats-->
+                            <div class="flex-grow-1">
+                                <div class="text-dark-50 font-weight-bold">FABLAB</div>
+                                <p>3D Printing/ Additive Manufacturing</p>
+
+                            </div>
+                            <div class="row justify-center my-2">
+                                <div class="col-md-3"><span>40 Slots</span></div>
+                                <div class="col-md-4"><span>9 Remain</span></div>
+                                <div class="col-md-5">
+                                    <span>2weeks Remain</span>
+                                    <div class="progress progress-xs my-.5">
+                                <div class="progress-bar bg-[#FF8C8C]" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                                </div>
+                            </div>
+                            <!--end::Stats-->
+                            <!--begin::Progress-->
+
+                            <!--end::Progress-->
+                        </div>
+                        <!--end::Body-->
+                    </div> --}}
+
+                    <!--end::Tiles Widget 4-->
+
+                    {{-- <div class="row mt-4">
+                        <div class="col-md-6">
+                            <a class="bg-[#FEC491] py-4 px-4" style="background: #FEC491; border-radius: 50px">Create Opportunity</a>
+                        </div>
+                        <div class="col-md-6">
+                            <a class="bg-[#FEC491] py-4 px-8" style="background: #FEC491; border-radius: 50px">Create Event</a>
+
+                        </div>
+                    </div> --}}
+                </div>
+
+
+            </div>
+            <!--end::Row-->
+
+
+            <div class="row mt-24" style="background: #FBFBFB">
+
+                <div class="col-md-9">
+                    <div class="card">
+                        <!--begin::Table-->
+                        <div class="card-header">
+                            <h5>Membership Subscriptions</h5>
+                        </div>
+                        <div class="table-responsive p-3">
+                            <!--begin: Datatable-->
+                            {{--            {{ $dataTable->table() }} --}}
+                            <table class="table " id="kt_datatable1">
+                                <thead>
+                                    <tr>
+                                        <th>Subscriber</th>
+                                        <th>Memberships Owner</th>
+                                        <th>Membership Plan</th>
+
+                                        <th>Organisation Type</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach ($packages as $package)
+                                        <tr>
+                                            <td>{{$package->user->name}}
+                                                <small class="text-mute">{{$package->user->telephone}}</small>
+                                            </td>
+                                            <td>{{$package->user}}</td>
+                                            <td>{{$package->membership_levels}}</td>
+                                            <td>Ignition</td>
+                                            <td>{{date('Y-m-d',strtotime($package->created_at))}}</td>
+                                            <td>{{$package->status}}</td>
+
+                                        </tr>
+
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+                            <!--end: Datatable-->
+                        </div>
+                        <!--end::Table-->
+                    </div>
+                </div>
+
+                <div class="col-md-3 bg-white py-12 px-4 rounded-xl">
+                    <h5>ICT CHAMBER MEMBERSHIP</h5>
+                    <span>TOTAL Membership {{ \App\Models\MembershipApplication::all()->count() }}</span>
+
+                    @foreach ($plans as $item)
+                        <div class="row py-12 ">
+                            <div class="col-md-4">
+                                <i class="fa fa-desktop fa-3x text-[#7CA0FD] p-4"
+                                    style="color:#7CA0FD; background: #F2F6FE"></i>
+                            </div>
+                            <div class="col-md-8">
+                                <h5>{{ $item->name }}</h5>
+                                <small>{{ \App\Models\MembershipApplication::where('packege_id', $item->id)->count() }}
+                                    Subscriptions</small>
+                            </div>
+                        </div>
+                    @endforeach
+
+
+                </div>
+
+            </div>
+
+            <!--end::Row-->
+            <!--end::Dashboard-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Entry-->
+@endsection
+@section('scripts')
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
+    {{-- <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>x --}}
+    <script src="{{ asset('js/amcharts/core.js') }}"></script>
+    {{-- <script src="{{asset('js/amcharts/charts.js')}}"></script> --}}
+    <script src="{{ asset('js/amcharts/animated.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        $(document).ready(function() {
+                $('#kt_datatable1').DataTable();
+            });
+
+        $.ajax({
+            url: "{{ route('admin.dashboard.chartData') }}",
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+                chartInfo(data);
+            },
+            error: function(e) {
+                console.log(e);
+            }
+        });
+
+        function chartInfo(data) {
+            const ctx = document.getElementById('chart_12');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.months,
+                    datasets: [{
+                        label: 'iWorkers',
+                        data: data.iworker,
+                        borderWidth: 1,
+                        backgroundColor: '#FFC998',
+                        borderColor: '#FFC998',
+                        borderRadius: '4'
+                    }, {
+                        label: 'MSMEs',
+                        data: data.msme,
+                        borderWidth: 1,
+                        backgroundColor: '#8F9CFF',
+                        borderColor: '#8F9CFF',
+                        borderRadius: '4'
+                    }, {
+                        label: 'DSPs',
+                        data: data.dsp,
+                        borderWidth: 1,
+                        backgroundColor: '#BEFEBC',
+                        borderColor: '#BEFEBC',
+                        borderRadius: '4'
+                    }, ]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+@stop

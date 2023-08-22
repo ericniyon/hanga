@@ -1,0 +1,87 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Ihuzo",
+        "description": "Ihuzo API documentation",
+        "contact": {
+            "email": "darius@matulionis.lt"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/login-with-ihuzo": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": " login in with ihuzo",
+                "description": "Returns full user info and login status",
+                "operationId": "credentialVerification",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email Address",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Password",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/api/signUp-with-ihuzo": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": " Sign Up with ihuzo",
+                "description": "Returns full user info and login status",
+                "operationId": "signingUp",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email Address",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Password",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        }
+    }
+}

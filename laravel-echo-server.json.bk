@@ -1,0 +1,37 @@
+{
+	"authHost": "https://ihuzo.orionsys.io",
+	"authEndpoint": "/broadcasting/auth",
+	"clients": [
+		{
+			"appId": "35f740f21add937a",
+			"key": "89fc1e1c14b01f3ed4f5ca9e5a30ebcd"
+		}
+	],
+	"database": "redis",
+	"databaseConfig": {
+		"redis": {},
+		"sqlite": {
+			"databasePath": "/database/laravel-echo-server.sqlite"
+		}
+	},
+	"devMode": true,
+	"host": null,
+	"port": "6001",
+	"protocol": "http",
+	"socketio": {},
+	"secureOptions": 67108864,
+	"sslCertPath": "",
+	"sslKeyPath": "",
+	"sslCertChainPath": "",
+	"sslPassphrase": "",
+	"subscribers": {
+		"http": true,
+		"redis": true
+	},
+	"apiOriginAllow": {
+		"allowCors": true,
+		"allowOrigin": "https://ihuzo.orionsys.io:80",
+		"allowMethods": "GET, POST",
+		"allowHeaders": "Origin, Content-Type, X-Auth-Token, X-Requested-With, Accept, Authorization, X-CSRF-TOKEN, X-Socket-Id"
+	}
+}
