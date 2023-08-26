@@ -28,7 +28,7 @@
                         </div>
                         <div class="card-body pt-0 px-3">
 
-                            <div class="list-group list-group-flush rounded-bottom">
+                            {{-- <div class="list-group list-group-flush rounded-bottom">
                                 @forelse($viewers as $item)
                                     @php
                                         $visitor=$item->visitor;
@@ -44,7 +44,7 @@
                                         </div>
                                     </div>
                                 @endforelse
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

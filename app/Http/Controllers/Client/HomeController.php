@@ -17,6 +17,7 @@ use App\Models\IworkerRegistration;
 use App\Models\MSMERegistration;
 use App\Models\RegistrationType;
 use App\Models\SearchHistory;
+use App\Models\StartupCompanyProfile;
 use App\Models\StudyLevel;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
@@ -40,13 +41,18 @@ class HomeController extends Controller
             ->where('client_id', '=', auth('client')->id())
             ->first();
 
+        $application2 = StartupCompanyProfile::where('client_id', '=', auth('client')->id())
+            ->first();
+
         if (is_null($application)) {
+            // if (is_null($application) && is_null($application2)) {
             return redirect()->to(route('v2.join.as'));
         }
         return view('client.home', [
-            'application' => $application,
+            'application' => $application == null ? $application2 : $application,
         ]);
     }
+
     public function profile()
     {
         $user = auth('client')->user();

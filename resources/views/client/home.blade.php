@@ -10,7 +10,7 @@
        <livewire:v2.home-tabs/>
    </div>
 
-    <x-top-rated/>
+    {{-- <x-top-rated/> --}}
 
 @endsection
 

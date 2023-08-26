@@ -25,15 +25,18 @@
                         </span>
                     </div>
                 </div>
-                <div id="platforms_types_id" class="collapse {{ count($selectedPlatformTypes) > 0 ? 'show' : '' }}"
+                @php
+                    $categories = \App\Models\StartupCategory::all();
+                @endphp
+                <div id="platforms_types_id" class="collapse {{ count($categories) > 0 ? 'show' : '' }}"
                     data-parent="#accordion1">
                     <div class="card-body p-2 bg-white ">
                         <div class="checkbox-list">
-                            @foreach ($platformTypes as $platformType)
-                                <label class="checkbox checkbox-info" wire:key="dp_key_id{{ $platformType->id }}">
-                                    <input type="checkbox" value="{{ $platformType->id }}"
+                            @foreach ($categories as $category)
+                                <label class="checkbox checkbox-info" wire:key="dp_key_id{{ $category->id }}">
+                                    <input type="checkbox" value="{{ $category->id }}"
                                         wire:model="selectedPlatformTypes" />
-                                    {{ $platformType->name }}
+                                    {{ $category->startup_category_name }}
                                     <span class="rounded-sm"></span>
                                 </label>
                             @endforeach
@@ -43,7 +46,7 @@
             </div>
 
 
-            <div class="card bg-light-light shadow-none rounded my-2 border overflow-hidden">
+            {{-- <div class="card bg-light-light shadow-none rounded my-2 border overflow-hidden">
                 <div class="card-header">
                     <div class="card-title collapsed pr-3" data-toggle="collapse" data-target="#specialities_filter">
                         <div class="card-label pl-4">
@@ -75,7 +78,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
 
         </div>
@@ -86,8 +89,8 @@
         <div class="row my-4 justify-content-center mb-5">
 
             <div class="col-md-12 " style="justify-content: center">
-                @foreach(\App\Models\FeatureContent::where('tab','Web/Mobile apps')->get() as $key=>$content)
-                {!! $content->content !!}
+                @foreach (\App\Models\FeatureContent::where('tab', 'Web/Mobile apps')->get() as $key => $content)
+                    {!! $content->content !!}
                 @endforeach
             </div>
         </div>

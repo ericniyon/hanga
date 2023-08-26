@@ -6,6 +6,8 @@
 
     @include('partials.includes._home_nav')
 
+    @include('client.profile-')
+
 @endsection
 
 

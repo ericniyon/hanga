@@ -37,7 +37,7 @@
                             <option value="Corporate">Corporate</option>
                             <option value="ICT Consultant">ICT Consultant</option>
                             <option value="iWorkers">iWorkers</option>
-                            <option value="ICT Community & Partners">ICT Community & Partners</option>
+                            <option value="ICT Community& Partners">ICT Community& Partners</option>
 
                         </select>
                         @error('category')

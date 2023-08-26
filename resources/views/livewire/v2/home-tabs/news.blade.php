@@ -13,7 +13,6 @@
     <div class="col-lg-3" x-data="{ open: true }">
         @include('partials.v2._filter_by_title')
         <div class="accordion accordion-light accordion-light-borderless accordion-svg-toggle" id="accordion1">
-<<<<<<< HEAD
             
 
             <div class="card bg-light-light shadow-none rounded-0 my-2 border overflow-hidden">
@@ -57,42 +56,6 @@
                     </div>
                 </div>
             </div>
-=======
-            <div class="card bg-light-light shadow-none rounded-0 my-2 border overflow-hidden">
-                <div class="card-header">
-                    <div class="card-title collapsed pr-3" data-toggle="collapse" data-target="#collapse2">
-                        <div class="card-label pl-4">
-                            <span class="svg-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
-                                </svg>
-                            </span>
-                            {{ __('News Categories') }}
-                        </div>
-                        <span class="svg-icon svg-icon-primary">
-                            @include('partials.icons._sort')
-                        </span>
-                    </div>
-                </div>
-                <div id="collapse2" class="collapse " data-parent="#accordion1">
-                    <div class="card-body p-2 bg-white ">
-                        <div class="checkbox-list">
-                            @foreach (\App\Models\ArticleCategory::all() as $artical)
-                                <label class="checkbox checkbox-info" wire:key="artical_key_id{{ $artical->id }}">
-                                    <input type="checkbox" value="{{ $artical->id }}"
-                                        wire:model="selectedArticalsCategory" class="check-articals">
-                                    {{ $artical->name }}
-                                    <span class="rounded-sm"></span>
-                                </label>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-
->>>>>>> e8d00160d0fdde6735d587bf46bd154bc41a032a
 
 
         </div>

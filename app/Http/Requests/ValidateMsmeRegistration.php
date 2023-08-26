@@ -57,6 +57,7 @@ class ValidateMsmeRegistration extends FormRequest
             ],
             'registration_date' => ['required', 'date', 'before_or_equal:' . today()->format('Y-m-d')],
             'rdb_certificate' => ['nullable', 'mimes:jpg,jpeg,pdf,png', 'max:2000'],
+            'rdb_certificate' => ['nullable', 'mimes:jpg,jpeg,pdf,png', 'max:2000'],
             'number_of_employees' => ['required', 'min:0', 'integer'],
 //            'company_category_id' => ['required', 'min:1', 'integer'],
 //            step 2

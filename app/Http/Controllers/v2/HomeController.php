@@ -42,8 +42,6 @@ class HomeController extends Controller
         return view('client.v2.home_page', compact('webinars', 'jobs', 'msmes', 'dsps', 'iworkers'));
     }
 
-
-
     public function joinAs()
     {
         return view('client.v2.join_as');
@@ -80,15 +78,11 @@ class HomeController extends Controller
 
         if ($client->registration_type_id == RegistrationType::MSME_ID) {
             return redirect()->route('v2.msme.details', encryptId($client->id));
-        }
-        elseif ($client->registration_type_id == RegistrationType::DSP_ID) {
+        } elseif ($client->registration_type_id == RegistrationType::DSP_ID) {
             return redirect()->route('v2.dsp.details', encryptId($client->id));
-        }
-        elseif ($client->registration_type_id == RegistrationType::iWorkerId) {
+        } elseif ($client->registration_type_id == RegistrationType::iWorkerId) {
             return redirect()->route('v2.iworker.details', encryptId($client->id));
         }
         return back();
     }
-
-
 }

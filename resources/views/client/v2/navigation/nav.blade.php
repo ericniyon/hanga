@@ -332,11 +332,7 @@ code {
 
                         {{-- <li class="nav-item">
                             <a class="nav-link px-4 rounded bg-hover-light-primary text-center text-white text-hover-dark "
-<<<<<<< HEAD
                                href="https://ihuzoapi.vercel.app/">
-=======
-                               href="https://ihuzoapi.vercel.app/" target='__blank'>
->>>>>>> 1c327201e8b2dd453c048c14ef01f7f09c8730e9
                                 {{ __('app.APIs') }}
                             </a>
                         </li> --}}

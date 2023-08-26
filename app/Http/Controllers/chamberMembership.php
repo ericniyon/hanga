@@ -21,7 +21,7 @@ class chamberMembership extends Controller
 
     public function __construct()
     {
-        $this->data = MembershipLevel::take(10)->pluck('id', 'title');
+        // $this->data = MembershipLevel::take(10)->pluck('id', 'title');
         $this->clusters = ClusterAssociationCategory::all();
         $this->cluster_items = ClusterAssociationCategory::take(10)->pluck('id', 'items');
     }
@@ -40,7 +40,7 @@ class chamberMembership extends Controller
     public function chamberMembership()
     {
         return view('client.v2.membership.membership',[
-            'data' => $this->data,
+            // 'data' => $this->data,
             'clusters' => $this->clusters,
             'cluster_items' => $this->cluster_items,
         ]);

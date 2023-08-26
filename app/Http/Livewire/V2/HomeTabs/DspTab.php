@@ -9,6 +9,7 @@ use App\Models\District;
 use App\Models\Province;
 use App\Models\Sector;
 use App\Models\Service;
+use App\Models\StartupCompanyProfile;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
@@ -85,54 +86,12 @@ class DspTab extends Component
     {
         $search = trim($this->search);
 
-        $clients = Client::with(['application.businessSectors', 'application.dspRegistration'])
-            ->withCount('ratings')
-            ->withSum('ratings', 'rating')
-            ->whereHas('application', function (Builder $builder) use ($search) {
-                $builder->whereNotIn("status", [ApplicationBaseModel::DRAFT, ApplicationBaseModel::REJECTED]);
-
-                $builder->when(!empty($search), function (Builder $query) use ($search) {
-                    $query->whereHas('dspRegistration', function (Builder $query) use ($search) {
-                        $query->where('company_name', 'ilike', "%$search%");
-                    });
-                });
-
-                $builder->when($this->selectedServices, function (Builder $query) {
-                    $query->whereHas('services', function (Builder $query) {
-                        $query->whereIn('services.id', $this->selectedServices);
-                    });
-                });
-                $builder->when($this->selectedBusinessSectors, function (Builder $query) {
-                    $query->whereHas('businessSectors', function (Builder $query) {
-                        $query->whereIn('business_sectors.id', $this->selectedBusinessSectors);
-                    });
-                });
-                $builder->when($this->provinceId > 0, function (Builder $query) {
-                    $query->whereHas('dspRegistrations', function (Builder $query) {
-
-                        $query->where('province_id', $this->provinceId);
-
-                        $query->when($this->districtId > 0, function (Builder $query) {
-                            $query->where('district_id', $this->districtId);
-                        });
-
-                        $query->when($this->sectorId > 0, function (Builder $query) {
-                            $query->where('sector_id', $this->sectorId);
-                        });
-
-                    });
-                });
-
-            })
-            ->whereHas('registrationType', function (Builder $query) {
-                $query->where('name', '=', 'DSP');
-            })
-            ->orderRating()
-            ->paginate(10)
-            ->appends(['search' => $this->search, 'selectedServices' => $this->selectedServices]);
+        $clients = StartupCompanyProfile::orWhere('company_name', 'like', '%' . $search . '%')
+            ->paginate(10);
 
         $businessSectors = BusinessSector::query()
             ->get();
+
         return view('livewire.v2.home-tabs.dsp-tab', [
             'clients' => $clients,
             'businessSectors' => $businessSectors,

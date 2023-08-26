@@ -18,16 +18,16 @@
                            class="text-info font-weight-bolder font-size-h4 text-hover-primary mb-1">
                             {{ $item->name }}
 
-                            @if($item->application->status==\App\Models\ApplicationBaseModel::APPROVED)
+                            {{-- @if($item->application->status==\App\Models\ApplicationBaseModel::APPROVED)
                                 <span class="svg-icon">
                                       @include('partials.icons._verified')
                                   </span>
-                            @endif
+                            @endif --}}
                         </a>
                         <!--end::Title-->
                         <!--begin::Desc-->
                         <span class="text-dark-50 font-weight-normal font-size-sm">
-                                {{ str_limit($item->application->bio) }}
+                                {{ str_limit($item->bio) }}
                             </span>
                         <!--begin::Desc-->
                         <div class="mt-2 d-flex  align-items-center justify-content-between">

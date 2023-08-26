@@ -285,8 +285,8 @@
     </div>
 
 
-
-    <x-top-rated/>
+{{-- 
+    <x-top-rated/> --}}
 
     @include('partials.client._footer')
     @include('partials._feedback_modal')
