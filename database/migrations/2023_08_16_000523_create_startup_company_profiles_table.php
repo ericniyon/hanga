@@ -31,6 +31,7 @@ class CreateStartupCompanyProfilesTable extends Migration
             $table->text('problem')->nullable();
             $table->string('logo')->nullable();
             $table->text('bio')->nullable();
+            $table->string('current_step')->nullable();
             $table->timestamps();
         });
     }

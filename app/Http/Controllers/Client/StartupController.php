@@ -24,7 +24,7 @@ use Storage;
 
 class StartupController extends Controller
 {
-    private int $steps = 3;
+    private int $steps = 7;
 
     function index()
     {
@@ -85,27 +85,37 @@ class StartupController extends Controller
     {
         $request->validated();
 
+        $clientId = \auth('client')->id();
         $rdbCertificates = null;
         $companyLogo = null;
+        $companypitch_deck = null;
+        $existingLogo = StartupCompanyProfile::where('client_id', '=', $clientId)->pluck('logo')->first();
+        $existingCertificate = StartupCompanyProfile::where('client_id', '=', $clientId)->pluck('rdb_certificate')->first();
+        $existingPitchDEck = StartupCompanyProfile::where('client_id', '=', $clientId)->pluck('pitch_deck')->first();
         DB::beginTransaction();
-        $clientId = \auth('client')->id();
 
         $currentStep = $request->input('current_step');
 
         if ($request->has('logo')) {
-            # code...
+
             $logo       = $request->logo;
-            $logo_name  = $logo->getClientOriginalName();
             $companyLogo        =   Storage::disk('logos')->put('/', $logo);
+        } else {
+            $companyLogo        =   $existingLogo;
+        }
+
+        if ($request->has('pitch_deck')) {
+            $pitch_deck       = $request->pitch_deck;
+            $companypitch_deck = Storage::disk('pitch_deck')->put('/', $pitch_deck);
+        } else {
+            $companypitch_deck        =   $existingPitchDEck;
         }
 
         if ($request->has('rdb_certificate')) {
             # code...
-
             $rdb_certificate       = $request->rdb_certificate;
-            $rdb_certificate_name  = $rdb_certificate->getClientOriginalName();
-
-            $rdbCertificates    =   Storage::disk('rdb_certificate')->put('/', $rdb_certificate);
+        } else {
+            $rdbCertificates = $existingCertificate;
         }
 
         if (!StartupCompanyProfile::where('client_id', '=', $clientId)->exists()) {
@@ -121,19 +131,12 @@ class StartupController extends Controller
                 'registration_date' => $request->registration_date,
                 'number_of_employee' => $request->number_of_employees,
                 'rdb_certificate' => $rdbCertificates,
+                'pitch_deck' => $companypitch_deck,
                 'website' => $request->website,
                 'mission' => $request->mission,
                 'logo' => $companyLogo,
-                'bio' => $request->bio,
+                'bio' => $request->business_description,
                 'current_step' => 1,
-
-
-                'revenue_stream' => $request->revenue_stream,
-                'market_size' => $request->market_size,
-                'fund_raising' => $request->fund_raising,
-                'fund_raising_reason' => $request->fund_raising_reason,
-                'acheivement' => $request->acheivement,
-                'acheivement_date' => $request->acheivement_date,
             ]);
             DB::commit();
             return $model;
@@ -146,22 +149,41 @@ class StartupController extends Controller
                 'tin' => $request->tin,
                 'phone' => $request->company_phone,
                 'email' => $request->company_email,
-                // 'location'=>$request->,
                 'registration_date' => $request->registration_date,
                 'number_of_employee' => $request->number_of_employees,
                 'rdb_certificate' => $rdbCertificates,
                 'website' => $request->website,
                 'mission' => $request->mission,
                 'logo' => $companyLogo,
+                'pitch_deck' => $companypitch_deck,
                 'current_step' => $currentStep,
-                'bio' => $request->bio,
+                'bio' => $request->business_description,
 
-                'revenue_stream' => $request->revenue_stream,
-                'market_size' => $request->market_size,
-                'fund_raising' => $request->fund_raising,
-                'fund_raising_reason' => $request->fund_raising_reason,
-                'acheivement' => $request->acheivement,
-                'acheivement_date' => $request->acheivement_date,
+                // business model
+                'target_customers'  => $request->target_customers,
+                'business_model'    => $request->business_model == null ?: implode(',', $request->business_model),
+                'revenue_stream'    => $request->revenue_stream,
+                'customer_value'    => $request->customer_value,
+                'gmt_channel'       => $request->gmt_channel,
+
+                // traction
+                'market_size_tam'   => $request->market_size_tam,
+                'market_size_sam'   => $request->market_size_sam,
+                'market_size_som'   => $request->market_size_som,
+                'active_users'      => $request->active_users,
+                'paying_customers'  => $request->paying_customers,
+                'anual_recuring_revenue' => $request->anual_recuring_revenue,
+                // 'revenue_frequency' => $request->revenue_frequency,
+                'customer_growth_rate' => $request->customer_growth_rate,
+                'gross_transaction_value' => $request->gross_transaction_value,
+
+                // fundraising
+                'current_startup_stage' => $request->current_startup_stage,
+                'previous_investment_size' => $request->previous_investment_size,
+                'previous_investment_type' => $request->previous_investment_type,
+                'target_investors' => $request->target_investors == null ?: implode(',', $request->target_investors),
+                'target_investment_size' => $request->target_investment_size,
+                'fundraising_breakdown' => $request->fundraising_breakdown,
             ]);
             DB::commit();
 
@@ -175,7 +197,6 @@ class StartupController extends Controller
      */
     public function saveStartupTeam(ValidateStartupTeam $request)
     {
-        $request->validated();
         DB::beginTransaction();
 
         $model = StartupCompanyTeam::create([
@@ -185,6 +206,8 @@ class StartupController extends Controller
             'team_phone' => $request->team_phone,
             'team_email' => $request->team_email,
             'team_position' => $request->team_position,
+            'team_linkedin' => $request->linkedin_profile,
+            'team_description' => $request->team_mate_description
         ]);
 
         DB::commit();
@@ -193,13 +216,18 @@ class StartupController extends Controller
         return back();
     }
 
-    function saveSolutions(Request $request)
+    function saveSolutions(ValidateStartUpSolution $request)
     {
         $model =    StartupSolution::create([
             'client_id'  => \auth('client')->id(),
             'product_type' => $request->solution_type,
             'name' => $request->name,
             'description' => $request->description,
+            'status' => $request->solution_status,
+
+            'active_users' => $request->active_users,
+            'capacity' => $request->capacity,
+            'product_link' => $request->product_link,
         ]);
 
         DB::commit();

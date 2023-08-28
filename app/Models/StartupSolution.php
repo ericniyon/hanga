@@ -14,5 +14,9 @@ class StartupSolution extends Model
         'product_type',
         'name',
         'description',
+        'active_users',
+        'capacity',
+        'status',
+        'product_link',
     ];
 }

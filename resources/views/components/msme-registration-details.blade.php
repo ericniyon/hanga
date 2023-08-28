@@ -1,16 +1,10 @@
-<div class="card gutter-b rounded {{ $cardClasses }}">
+{{-- company information --}}
+<div class="card gutter-b rounded ">
     <div class="card-body">
-        <div class="d-flex align-items-center justify-content-between mb-2">
-            <h4 class="font-weight-bolder text-capitalize">{{ __('client_registration.business_identification') }}</h4>
-            @if($application->canUpdateInfo && $editable)
-                <x-edit-button data-toggle="modal" data-target="#editBizIdentificationModal"/>
-            @endif
-        </div>
-        <div class="separator separator-dashed  mb-3"></div>
         <div class="row">
             <div class="col-md-6">
                 <p>
-                    <strong>{{ __("client_registration.company_name") }}:</strong> <br>
+                    <strong>Company Registration:</strong> <br>
                     <span>{{ $model->company_name }}</span>
                 </p>
             </div>
@@ -18,53 +12,92 @@
 
                 <p>
                     <strong class="d-block font-weight-bolder">
-                        {{ __("client_registration.company_categories") }}
+                        {{ __('client_registration.company_categories') }}
                     </strong>
-                    @forelse($application->categories as $item)
-                        <span class="badge badge-secondary rounded my-1">{{ $item->name }}</span>
-                    @empty
-                        <span class="label label-inline label-light-info">{{ __("app.none") }}</span>
-                    @endforelse
+                    <span
+                        class="badge badge-secondary rounded my-1">{{ \App\Models\StartupSubCategory::where('id', $model->sub_category_id)->pluck('startup_sub_category_name')->first() }}</span>
                 </p>
             </div>
             <div class="col-md-6">
                 <p>
-                    <strong>{{ __("client_registration.tin") }}:</strong>
+                    <strong>{{ __('client_registration.tin') }}:</strong>
                     <span>{{ $model->tin }}</span>
                 </p>
             </div>
             <div class="col-md-6">
                 <p>
-                    <strong>{{ __("client_registration.phone") }} :</strong>
-                    <span><a href="tel:{{ $model->company_phone }}">{{ $model->company_phone }}</a></span>
+                    <strong>{{ __('client_registration.phone') }} :</strong>
+                    <span><a href="tel:{{ $model->phone }}">{{ $model->phone }}</a></span>
                 </p>
             </div>
             <div class="col-md-6">
                 <p>
-                    <strong>{{ __("client_registration.email") }} :</strong>
+                    <strong>{{ __('client_registration.email') }} :</strong>
                     <span>
-                                        <a href="mailto:{{ $model->company_email }}">{{ $model->company_email }}</a>
-                                    </span>
+                        <a href="mailto:{{ $model->email }}">{{ $model->email }}</a>
+                    </span>
                 </p>
             </div>
             <div class="col-md-6">
                 <p>
                     <strong>{{ __('client_registration.registration_date') }} :</strong>
-                    <span>{{ optional($model->registration_date)->toDateString() }}</span>
+                    <span>{{ $model->registration_date }}</span>
                 </p>
             </div>
 
-            @if($editable || $review)
+            @if ($model->rdb_certificate)
                 <div class="col-md-6">
                     <p class="d-flex align-items-center">
-                        <strong class="mr-4">{{__('client_registration.rdb_certificate')}}</strong>
-                        @if($model->rdb_certificate)
-                            <a href="{{ route('msme.download.file',['id'=>encryptId($model->id),'type'=>'rdb']) }}"
-                               target="_blank" data-toggle="tooltip" title="{{__('client_registration.download')}}"
-                               class="btn btn-sm btn-light-info rounded py-1 font-weight-bolder px-5">
+                        <strong class="mr-4">{{ __('client_registration.rdb_certificate') }}</strong>
+                        @if ($model->rdb_certificate)
+                            <a href="{{ Storage::disk('rdb_certificate')->url($model->rdb_certificate) }}"
+                                target="_blank" download="{{ $model->company_name }}-certificate" data-toggle="tooltip"
+                                title="{{ __('client_registration.download') }}"
+                                class="btn btn-sm btn-light-info rounded py-1 font-weight-bolder px-5">
                                 @include('partials.buttons._svg_download_icon')
                                 <span class="d-none d-md-inline">
-                                    {{__('client_registration.download')}}
+                                    {{ __('client_registration.download') }}
+                                </span>
+                            </a>
+                        @else
+                            N/A
+                        @endif
+                    </p>
+                </div>
+            @endif
+
+            @if ($model->logo)
+                <div class="col-md-6">
+                    <p class="d-flex align-items-center">
+                        <strong class="mr-4">Company Logo</strong>
+                        @if ($model->logo)
+                            <a href="{{ Storage::disk('logos')->url($model->logo) }}" target="_blank"
+                                download="{{ $model->company_name }}-certificate" data-toggle="tooltip"
+                                title="Company Logo"
+                                class="btn btn-sm btn-light-info rounded py-1 font-weight-bolder px-5">
+                                @include('partials.buttons._svg_download_icon')
+                                <span class="d-none d-md-inline">
+                                    Download
+                                </span>
+                            </a>
+                        @else
+                            N/A
+                        @endif
+                    </p>
+                </div>
+            @endif
+            @if ($model->pitch_deck)
+                <div class="col-md-6">
+                    <p class="d-flex align-items-center">
+                        <strong class="mr-4">Company Pitch Deck</strong>
+                        @if ($model->logo)
+                            <a href="{{ Storage::disk('pitch_deck')->url($model->pitch_deck) }}" target="_blank"
+                                download="{{ $model->company_name }}-pitch Deck" data-toggle="tooltip"
+                                title="Company pitch deck"
+                                class="btn btn-sm btn-light-info rounded py-1 font-weight-bolder px-5">
+                                @include('partials.buttons._svg_download_icon')
+                                <span class="d-none d-md-inline">
+                                    Download
                                 </span>
                             </a>
                         @else
@@ -75,55 +108,35 @@
             @endif
             <div class="col-md-6">
                 <p>
-                    <strong>{{ __("client_registration.number_of_employees") }} :</strong>
-                    <span>{{ $model->number_of_employees }}</span>
+                    <strong class="d-block font-weight-bolder">{{ __('app.business_sector') }}</strong>
+                    <span
+                        class="badge badge-secondary rounded my-1">{{ \App\Models\StartupCategory::where('id', $model->category_id)->pluck('startup_category_name')->first() }}</span>
                 </p>
             </div>
-            <div class="col-md-6">
-                <p>
-                    <strong class="d-block font-weight-bolder">{{__('app.business_sector')}}</strong>
-                    @forelse($application->businessSectors as $item)
-                        <span class="badge badge-secondary rounded my-1">{{ $item->name }}</span>
-                    @empty
-                        <span class="label label-inline label-light-info">{{ __("app.none") }}</span>
-                    @endforelse
-                </p>
-            </div>
-            <div class="col-md-6">
-                <p>
-                    <strong class="d-block font-weight-bolder">
-                        {{ __("client_registration.which_payment_does_your_business_offer") }}
-                    </strong>
-                    @forelse($model->paymentMethods as $item)
-                        <span class="badge badge-secondary rounded my-1">{{ $item->name }}</span>
-                    @empty
-                        <span class="label label-inline label-light-info">
-                            {{ __("app.none") }}
-                        </span>
-                    @endforelse
-                </p>
-            </div>
-            <div class="col-md-12">
-                <p>
-                    <strong class="d-block font-weight-bolder">
-                        {{ __("app.Digital platforms used to sell goods/services") }}
-                    </strong>
-                    @forelse($model->digitalPlatforms as $item)
-                        <span class="badge badge-secondary rounded my-1">{{ $item->name }}</span>
-                    @empty
-                        <span class="label label-inline label-light-info">
-                            {{ __("app.none") }}
-                        </span>
-                    @endforelse
-                </p>
-            </div>
-
-
-            @if($editable || $review)
-                <div class="col-md-12">
-                    <strong>{{ __("client_registration.brief_bio") }}</strong>
+            @if ($model->website)
+                <div class="col-md-6">
                     <p>
-                        {{ optional($model->application)->bio }}
+                        <strong class="d-block font-weight-bolder">Website</strong>
+                        <a href="{{ $model->website }}" target="_blank">link to website</a>
+                    </p>
+                </div>
+            @endif
+
+
+            @if ($editable || $review)
+                <div class="col-md-12">
+                    <strong>{{ __('client_registration.brief_bio') }}</strong>
+                    <p>
+                        {{ $model->bio }}
+                    </p>
+                </div>
+            @endif
+
+            @if ($editable || $review)
+                <div class="col-md-12">
+                    <strong>Mission</strong>
+                    <p>
+                        {{ $model->mission }}
                     </p>
                 </div>
             @endif
@@ -131,188 +144,309 @@
     </div>
 </div>
 
-@include('partials._expertise_and_interests',['cardClasses'=>$cardClasses])
-
-<div class="card gutter-b rounded  {{ $cardClasses }}">
-    <div class="card-body">
-        <div class="d-flex align-items-center justify-content-between mb-2">
-            <h4 class="font-weight-bolder text-capitalize">
-                {{ __("client_registration.company_address") }}
-            </h4>
-            @if($application->canUpdateInfo && $editable)
-                <x-edit-button data-toggle="modal" data-target="#EditCompanyAddressModal"/>
-            @endif
-        </div>
-        <div class="separator separator-dashed  mb-3"></div>
-        <div class="row">
-            <div class="col-md-6">
-                <p>
-                    <strong>{{ __("client_registration.province") }}:</strong>
-                    <span>{{ $model->province->name??'N/A' }}</span>
-                </p>
-            </div>
-            <div class="col-md-6">
-                <p>
-                    <strong>{{ __("client_registration.district") }}:</strong>
-                    <span>{{ $model->district->name??'N/A' }}</span>
-                </p>
-            </div>
-            <div class="col-md-6">
-                <p>
-                    <strong>{{ __("client_registration.sector") }}:</strong>
-                    <span>{{ $model->sector->name ?? 'N/A' }}</span>
-                </p>
-            </div>
-            <div class="col-md-6">
-                <p>
-                    <strong>{{ __("client_registration.cell") }}:</strong>
-                    <span>{{ $model->cell->name??'N/A' }}</span>
-                </p>
-            </div>
-            <div class="col-md-6">
-                <p>
-                    <strong>{{ __("client_registration.village") }}:</strong>
-                    <span>{{ $model->village->name??'N/A' }}</span>
-                </p>
-            </div>
-
-            <div class="col-md-6">
-                <p>
-                    <strong>{{ __("client_registration.website") }}:</strong>
-                    <a href="{{ $model->website??'' }}"
-                       target="_blank">{{ $model->website??'None' }}</a>
-                </p>
-            </div>
-
-
-        </div>
-    </div>
-</div>
-
-<div class="card gutter-b rounded  {{ $cardClasses }}">
-    <div class="card-body">
-        <div class="d-flex align-items-center justify-content-between mb-2">
-            <h4 class="font-weight-bolder text-capitalize">
-
-                {{ __("app.company_representative_details") }}
-            </h4>
-            @if($application->canUpdateInfo && $editable)
-                <x-edit-button data-toggle="modal" data-target="#editRepresentativeDetailsModal"/>
-            @endif
-        </div>
-        <div class="separator separator-dashed  mb-3"></div>
-        <div class="row">
-            <div class="col-md-6">
-                <p>
-                    <strong>{{ __("client_registration.representative_name") }}:</strong>
-                    <span>{{ $model->representative_name }}</span>
-                </p>
-            </div>
-            <div class="col-md-6">
-                <p>
-                    <strong>{{ __("client_registration.phone") }}:</strong>
-                    <a href="tel:{{ $model->representative_phone }}">{{ $model->representative_phone }}</a>
-                </p>
-            </div>
-            <div class="col-md-6">
-                <p>
-                    <strong>{{ __("client_registration.email") }}:</strong>
-                    <a href="mailto:{{ $model->representative_email }}">{{ $model->representative_email }}</a>
-                </p>
-            </div>
-            <div class="col-md-6">
-                <p>
-                    <strong>{{ __("client_registration.position") }}:</strong>
-                    <span>{{ $model->representative_position }}</span>
-                </p>
-            </div>
-            <div class="col-md-6">
-                <p>
-                    <strong>{{ __("client_registration.gender") }}:</strong>
-                    <span>{{ $model->representative_gender }}</span>
-                </p>
-            </div>
-            <div class="col-md-6">
-                <p>
-                    <strong>{{ __("client_registration.physical_disability") }}:</strong>
-                    <span>{{ $model->representative_physical_disability??'N/A' }}</span>
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
-
+{{-- team section --}}
 @include('partials._certification_standards_card')
 
-<div class="card gutter-b rounded  {{ $cardClasses }}">
-    <div class="card-body">
+{{-- product and services --}}
+<div class="card card-body gutter-b rounded  {{ $cardClasses }}">
+    <h4 class="font-weight-bolder text-primary">Product / Services</h4>
 
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <h4 class="font-weight-bolder mb-0">
-                {{ __("client_registration.products") }}
-                / {{ __("client_registration.services") }} ({{ $application->applicationSolutions->count() }})
-            </h4>
-
-            @if($application->canUpdateInfo && $editable)
-                <button type="button"
-                        class="btn btn-sm btn-light-info rounded btn-hover-text-white font-weight-bolder"
-                        id="addSolutionButton">
-                    @include('partials._plus_icon')
-                    {{ __("client_registration.add_new") }}
-                </button>
-            @endif
-        </div>
-
+    <div>
         <div class="accordion accordion-toggle-arrow" id="accordionExample2">
-            @foreach($application->applicationSolutions as $item)
+            @foreach (\App\Models\StartupSolution::where('client_id', \auth('client')->id())->get() as $item)
                 <div class="card rounded">
                     <div class="card-header rounded">
-                        <div
-                                class="card-title collapsed d-flex align-items-center justify-content-between"
-                                data-toggle="collapse"
-                                data-target="#collapse2{{$item->id}}">
+                        <div class="card-title collapsed d-flex align-items-center justify-content-between"
+                            data-toggle="collapse" data-target="#collapse2{{ $item->id }}">
                             <span>{{ $item->name }}</span>
                             <span
-                                    class="label label-inline label-light-{{$item->typeColor}} rounded d-block mr-10">{{ $item->type }}</span>
+                                class="label label-inline label-light-primary rounded d-block mr-10">{{ $item->product_type }}</span>
                         </div>
                     </div>
-                    <div id="collapse2{{$item->id}}" class="collapse"
-                         data-parent="#accordionExample2">
+                    <div id="collapse2{{ $item->id }}" class="collapse" data-parent="#accordionExample2">
                         <div class="card-body">
 
                             <div>
-                                <strong class="d-block">{{ __("client_registration.description") }}</strong>
+                                <strong class="d-block">{{ __('client_registration.description') }}</strong>
                                 <p>{{ $item->description }}</p>
                             </div>
-                            @if($application->canUpdateInfo && $editable)
-                                <div class="d-flex align-items-center justify-content-start">
-                                    <button type="button"
-                                            data-id="{{ $item->id }}"
-                                            data-name="{{ $item->name }}"
-                                            data-type="{{ $item->type }}"
-                                            data-description="{{ $item->description }}"
-                                            data-toggle="tooltip" title="Edit"
-                                            class="btn btn-sm btn-light-info js-edit rounded mr-4">
-                                        @include('partials.buttons._edit_svg_icon')
-                                    </button>
-                                    <a href="{{ route('client.solutions.destroy',encryptId($item->id)) }}"
-                                       data-id="{{ $item->id }}"
-                                       data-name="{{ $item->name }}"
-                                       data-type="{{ $item->type }}"
-                                       data-description="{{ $item->description }}"
-                                       data-toggle="tooltip" title="Delete"
-                                       class="btn btn-sm btn-light-danger js-delete rounded">
-                                        @include('partials.buttons._trash_svg_icon')
-                                    </a>
+
+                            <div class="row">
+                                <div class="col-md-4 col-sm-12">
+                                    <strong>Active Users:</strong>
+                                    <p>
+                                        {{ $item->active_users }}
+                                    </p>
                                 </div>
-
-                            @endif
-
+                                <div class="col-md-4 col-sm-12">
+                                    <strong>Capacity:</strong>
+                                    <p>
+                                        {{ $item->capacity }}
+                                    </p>
+                                </div>
+                                @php
+                                    function startsWith($string, $startString)
+                                    {
+                                        $len = strlen($startString);
+                                        return substr($string, 0, $len) === $startString;
+                                    }
+                                    $link = startsWith($item->product_link, 'http');
+                                @endphp
+                                @if ($item->product_link)
+                                    <div class="col-md-4 col-sm-12">
+                                        <strong>Capacity:</strong>
+                                        <a href="{{ $link ? $item->product_link : 'http://' . $item->product_link }}"
+                                            target="_blank">
+                                            {{ $item->product_link }}
+                                        </a>
+                                    </div>
+                                @endif
+                                <div class="col-md-4 col-sm-12">
+                                    <strong>Status:</strong>
+                                    <p>
+                                        {{ $item->status }}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
+    </div>
+</div>
 
+{{-- business model --}}
+<div class="card gutter-b rounded ">
+    <div class="card-body">
+        <h4 class="font-weight-bolder mb-4 text-primary">Business Model</h4>
+        <div class="separator separator-dashed  mb-3"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    <strong>Target Customer</strong> <br>
+                    <span>{{ $model->target_customers }}</span>
+                </p>
+            </div>
+            <div class="col-md-12 mt-3">
+                <p>
+                    <strong>What value do you bring to customers</strong> <br>
+                    <span>{{ $model->customer_value }}</span>
+                </p>
+            </div>
+            <div class="col-md-12 row mb-5">
+
+                <div class="col-md-12">
+                    <strong class="d-block font-weight-bolder">
+                        Business Model
+                    </strong>
+                </div>
+                {{-- <div class="col-md-12 row mb-3"> --}}
+                @php
+                    $bsmodel = $model == null ? ($business_model = []) : explode(',', $model->business_model);
+                @endphp
+                <div class="col-md-4 my-1">
+                    <label class="checkbox checkbox-info">
+                        <input type="checkbox" {{ in_array('B2B', $bsmodel) ? 'checked' : '' }} name="business_model[]"
+                            value="B2B" id="angel" disabled>
+                        B2B
+                        <span class="rounded-0"></span>
+                    </label>
+                </div>
+                <div class="col-md-4 my-1">
+                    <label class="checkbox checkbox-info">
+                        <input type="checkbox" {{ in_array('B2C', $bsmodel) ? 'checked' : '' }} name="business_model[]"
+                            value="B2C" id="angel" disabled>
+                        B2C
+                        <span class="rounded-0"></span>
+                    </label>
+                </div>
+                <div class="col-md-4 my-1">
+                    <label class="checkbox checkbox-info">
+                        <input type="checkbox" {{ in_array('B2B2C', $bsmodel) ? 'checked' : '' }}
+                            name="business_model[]" value="B2B2C" id="angel" disabled>
+                        B2B2C
+                        <span class="rounded-0"></span>
+                    </label>
+                </div>
+                <div class="col-md-4 my-1">
+                    <label class="checkbox checkbox-info">
+                        <input type="checkbox" {{ in_array('C2C', $bsmodel) ? 'checked' : '' }}
+                            name="business_model[]" value="C2C" id="angel" disabled>
+                        C2C
+                        <span class="rounded-0"></span>
+                    </label>
+                </div>
+                <div class="col-md-4 my-1">
+                    <label class="checkbox checkbox-info">
+                        <input type="checkbox" {{ in_array('C2B', $bsmodel) ? 'checked' : '' }}
+                            name="business_model[]" value="C2B" id="angel" disabled>
+                        C2B
+                        <span class="rounded-0"></span>
+                    </label>
+                </div>
+                {{-- </div> --}}
+            </div>
+            <div class="col-md-6 mt-4">
+                <strong>Revenue Stream</strong>
+                <p>
+                    <span>{{ $model->revenue_stream }}</span>
+                </p>
+            </div>
+            <div class="col-md-6 mt-4">
+                <strong>GMT Channels</strong>
+                <p>
+                    <span>{{ $model->gmt_channel }}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Traction --}}
+<div class="card gutter-b rounded ">
+    <div class="card-body">
+        <h4 class="font-weight-bolder mb-4 text-primary">Traction</h4>
+        <div class="separator separator-dashed  mb-3"></div>
+        <div class="row">
+            <div class="col-md-4">
+                <p>
+                    <strong>Market size (TAM)</strong> <br>
+                    <span>{{ $model->market_size_tam }}</span>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p>
+                    <strong>Market size (SAM)</strong> <br>
+                    <span>{{ $model->market_size_sam }}</span>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p>
+                    <strong>Market size (SOM)</strong> <br>
+                    <span>{{ $model->market_size_som }}</span>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p>
+                    <strong>Active Users</strong> <br>
+                    <span>{{ $model->active_users }}</span>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p>
+                    <strong> Paying Customers</strong> <br>
+                    <span>{{ $model->paying_customers }}</span>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p>
+                    <strong> Anual Recuring Revenue </strong> <br>
+                    <span>{{ $model->anual_recuring_revenue }}</span>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p>
+                    <strong> Customer Growth Rate </strong> <br>
+                    <span>{{ $model->customer_growth_rate }}%</span>
+                </p>
+            </div>
+            @if ($model->gross_transaction_value)
+                <div class="col-md-4">
+                    <p>
+                        <strong> Gross Transaction Value </strong> <br>
+                        <span>{{ $model->gross_transaction_value }}</span>
+                    </p>
+                </div>
+            @endif
+        </div>
+    </div>
+</div>
+
+{{-- Investment and Fundraising --}}
+<div class="card gutter-b rounded ">
+    <div class="card-body">
+        <h4 class="font-weight-bolder mb-4 text-primary">Investment & Fundraising</h4>
+        <div class="separator separator-dashed  mb-3"></div>
+        <div class="row">
+            <div class="col-md-4">
+                <p>
+                    <strong>Current Stage</strong> <br>
+                    <span>{{ $model->current_startup_stage }}</span>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p>
+                    <strong>Previous Investment Size</strong> <br>
+                    <span>{{ $model->previous_investment_size }}</span>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p>
+                    <strong>Type Of Investment</strong> <br>
+                    <span class="uppercase">{{ $model->previous_investment_type }}</span>
+                </p>
+            </div>
+            <div class="col-md-12 row mb-4">
+                <div class="col-12">
+                    <strong>Target Investors</strong>
+                </div>
+                @php
+                    $tgtinvestor = $model == null ? ($target_investors = []) : explode(',', $model->target_investors);
+                @endphp
+                <div class="col-md-4 my-1">
+                    <label class="checkbox checkbox-info">
+                        <input type="checkbox" name="target_investors[]" value="angel" id="angel"
+                            {{ in_array('angel', $tgtinvestor) ? 'checked' : '' }} disabled>
+                        Angel
+                        <span class="rounded-0"></span>
+                    </label>
+                </div>
+                <div class="col-md-4 my-1">
+                    <label class="checkbox checkbox-info">
+                        <input type="checkbox" {{ in_array('investors', $tgtinvestor) ? 'checked' : '' }}
+                            name="target_investors[]" value="investors" id="Investors"disabled>
+                        Investors
+                        <span class="rounded-0"></span>
+                    </label>
+                </div>
+                <div class="col-md-4 my-1">
+                    <label class="checkbox checkbox-info">
+                        <input type="checkbox" {{ in_array('VCs', $tgtinvestor) ? 'checked' : '' }}
+                            name="target_investors[]" value="VCs" id="VCs"disabled>
+                        VCs
+                        <span class="rounded-0"></span>
+                    </label>
+                </div>
+                <div class="col-md-4 my-1">
+                    <label class="checkbox checkbox-info">
+                        <input type="checkbox" {{ in_array('Corporates', $tgtinvestor) ? 'checked' : '' }}
+                            name="target_investors[]" value="Corporates" id="Corporates"disabled>
+                        Corporates
+                        <span class="rounded-0"></span>
+                    </label>
+                </div>
+                <div class="col-md-4 my-1">
+                    <label class="checkbox checkbox-info">
+                        <input type="checkbox" {{ in_array('Grants', $tgtinvestor) ? 'checked' : '' }}
+                            name="target_investors[]" value="Grants" id="Grants"disabled>
+                        Grants
+                        <span class="rounded-0"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <p>
+                    <strong> Target Investment Size</strong> <br>
+                    <span>{{ $model->target_investment_size }}</span>
+                </p>
+            </div>
+            <div class="col-md-12">
+                <strong class="mb-4"> Fundraising reason/ Breakdown </strong>
+                <p>
+                    <span>{{ $model->fundraising_breakdown }}</span>
+                </p>
+            </div>
+        </div>
     </div>
 </div>

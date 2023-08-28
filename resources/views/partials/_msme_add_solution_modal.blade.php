@@ -18,9 +18,12 @@
                         <label for="solution_type">@lang('client_registration.product_type')</label>
                         <select name="solution_type" id="solution_type" class="custom-select">
                             <option value="">@lang('client_registration.choose')</option>
-                            @foreach (\App\Models\ApplicationSolution::types() as $item)
-                                <option value="{{ $item }}">{{ $item }}</option>
-                            @endforeach
+                            {{-- @foreach (\App\Models\ApplicationSolution::types() as $item) --}}
+                            <option value="hardware">Hardware</option>
+                            <option value="software">Software</option>
+                            <option value="product">Product</option>
+                            <option value="service">Service</option>
+                            {{-- @endforeach --}}
                         </select>
                     </div>
                     <div class="form-group">
@@ -30,6 +33,27 @@
                     <div class="form-group">
                         <label for="solution_description">@lang('client_registration.description')</label>
                         <textarea rows="7" name="description" id="solution_description" class="form-control rounded"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="solution_status">Status</label>
+                        <select name="solution_status" id="solution_status" class="custom-select">
+                            <option value="">@lang('client_registration.choose')</option>
+                            <option value="prototype">Prototype</option>
+                            <option value="mvp">MVP</option>
+                            <option value="pmf">PMF</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="active_users">Active Users</label>
+                        <input type="text" name="active_users" id="active_users" class="form-control rounded">
+                    </div>
+                    <div class="form-group">
+                        <label for="capacity">Capacity</label>
+                        <input type="text" name="capacity" id="capacity" class="form-control rounded">
+                    </div>
+                    <div class="form-group">
+                        <label for="product_link">Product Link (Optional)</label>
+                        <input type="text" name="product_link" id="product_link" class="form-control rounded">
                     </div>
 
                 </div>

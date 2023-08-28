@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCurrentStepToStartupCompanyProfiles extends Migration
+class AddPitchDeckToStartupCompanyProfiles extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddCurrentStepToStartupCompanyProfiles extends Migration
     public function up()
     {
         Schema::table('startup_company_profiles', function (Blueprint $table) {
-            $table->string('current_step')->nullable();
+            $table->string('pitch_deck')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddCurrentStepToStartupCompanyProfiles extends Migration
     public function down()
     {
         Schema::table('startup_company_profiles', function (Blueprint $table) {
-            //
+            $table->dropColumn('pitch_deck');
         });
     }
 }

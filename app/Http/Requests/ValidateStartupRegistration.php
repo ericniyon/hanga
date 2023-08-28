@@ -40,24 +40,40 @@ class ValidateStartupRegistration extends FormRequest
             'current_step'          => 'required',
             'business_sector_id'    => 'required',
             'company_name'          => ['required'],
-            'tin'                   => ['required_if:current_step,1', 'regex:/^[0-9]+$/', 'min:2', 'max:9'],
+            'tin'                   => ['required_if:current_step,1', 'regex:/^[0-9]+$/', 'min:9', 'max:9'],
             'mission'               => ['required', 'max:800'],
-            'bio'                   => ['required', 'max:800'],
+            'business_description'  => ['required', 'max:800'],
             'company_phone'         => ['required', 'string'],
             'company_email'         => ['required', 'string', 'email',],
             'registration_date'     => ['required', 'date', 'before_or_equal:' . today()->format('Y-m-d')],
             'rdb_certificate'       => ['nullable', 'mimes:jpg,jpeg,pdf,png', 'max:2000'],
             'logo'                  => ['nullable', 'mimes:jpg,jpeg,pdf,png', 'max:2000'],
+            'pitch_deck'            => ['nullable', 'mimes:ppt,pptx', 'max:2048'],
             'company_category'      => ['required', 'min:1'],
 
             // step 4
-            'revenue_stream' => ['required_if:current_step,4'],
-            'market_size' => ['required_if:current_step,4'],
-            'fund_raising' => ['required_if:current_step,4'],
-            'fund_raising_reason' => ['required_if:current_step,4'],
-            'acheivement' => ['required_if:current_step,4'],
-            'acheivement_date' => ['required_if:current_step,4'],
+            'target_customers'  => ['required_if:current_step,4'],
+            'business_model'    => ['required_if:current_step,4'],
+            'revenue_stream'    => ['required_if:current_step,4'],
+            'customer_value'    => ['required_if:current_step,4'],
+            'gmt_channel'       => ['required_if:current_step,4'],
 
+            // step 5 traction
+            'market_size_tam'   => ['required_if:current_step,5'],
+            'market_size_sam'   => ['required_if:current_step,5'],
+            'market_size_som'   => ['required_if:current_step,5'],
+            'active_users'      => ['required_if:current_step,5'],
+            'paying_customers'  => ['required_if:current_step,5'],
+            'anual_recuring_revenue' => ['required_if:current_step,5'],
+            'customer_growth_rate' => ['required_if:current_step,5'],
+
+            // fundraising step 6
+            'current_startup_stage' => ['required_if:current_step,6'],
+            'previous_investment_size' => ['required_if:current_step,6'],
+            'previous_investment_type' => ['required_if:current_step,6'],
+            'target_investors' => ['required_if:current_step,6'],
+            'target_investment_size' => ['required_if:current_step,6'],
+            'fundraising_breakdown' => ['required_if:current_step,6'],
         ];
     }
 
@@ -94,6 +110,25 @@ class ValidateStartupRegistration extends FormRequest
             'representative_phone.regex' => 'The representative phone format is invalid. remove special characters like. +,($@..',
             'interests_id.required_if' => "Please choose at least one area of interest",
             'interests_id.required' => "Please choose at least one area of interest",
+
+            // business model
+            'target_customers.required_if'  => $errorMessage,
+            'business_model.required_if'    => $errorMessage,
+            'revenue_stream.required_if'    => $errorMessage,
+            'customer_value.required_if'    => $errorMessage,
+            'gmt_channel.required_if'       => $errorMessage,
+
+            // traction
+
+            'market_size_tam.required_if'  => $errorMessage,
+            'market_size_sam.required_if'  => $errorMessage,
+            'market_size_som.required_if'  => $errorMessage,
+            'active_users.required_if'     => $errorMessage,
+            'paying_customers.required_if' => $errorMessage,
+            'anual_recuring_revenue.required_if' => $errorMessage,
+            // 'revenue_frequency.required_if' => $errorMessage,
+            'customer_growth_rate.required_if' => $errorMessage,
+            'gross_transaction_value.required_if' => $errorMessage,
         ];
     }
 }

@@ -65,6 +65,7 @@ use App\Http\Controllers\StrategicOriantation;
 use App\Http\Controllers\v2\AffiliatesController;
 use App\Http\Controllers\v2\AggregatorsController;
 use App\Http\Controllers\MembershiPackegs\Packeges;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Promotion;
 use App\Http\Controllers\Testing\TestingController;
 use App\Http\Livewire\Frontend\Applicants;
@@ -94,6 +95,9 @@ Route::get('storage/{filename}', function ($filename) {
     $fullPath = $path . $filename;
     return Storage::download($fullPath);
 })->name("get.image.path");
+
+// download one pager pdf
+Route::get('generate-pdf/{id}', [PDFController::class, 'downloadOnePager'])->name('onepager.download');
 
 Route::get('storage/webinars/{id}', function ($id) {
     $b = Webinar::query()->find($id);

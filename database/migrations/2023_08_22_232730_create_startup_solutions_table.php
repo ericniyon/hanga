@@ -19,6 +19,9 @@ class CreateStartupSolutionsTable extends Migration
             $table->string('product_type')->nullable();
             $table->string('name')->nullable();
             $table->text('description')->nullable();
+            $table->string('active_users')->nullable();
+            $table->string('capacity')->nullable();
+            $table->string('product_link')->nullable();
             $table->string('status', 10)->nullable();
             $table->timestamps();
         });

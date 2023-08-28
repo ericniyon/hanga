@@ -16,5 +16,7 @@ class StartupCompanyTeam extends Model
         'team_phone',
         'team_email',
         'team_position',
+        'team_linkedin',
+        'team_description',
     ];
 }

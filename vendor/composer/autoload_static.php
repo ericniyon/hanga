@@ -185,6 +185,10 @@ class ComposerStaticInitf2f22824e8ad1705fb551409b905cb45
             'Laravel\\Sail\\' => 13,
             'L5Swagger\\' => 10,
         ),
+        'K' => 
+        array (
+            'Knp\\Snappy\\' => 11,
+        ),
         'J' => 
         array (
             'Jorenvh\\Share\\' => 14,
@@ -255,6 +259,7 @@ class ComposerStaticInitf2f22824e8ad1705fb551409b905cb45
         array (
             'Brick\\Math\\' => 11,
             'BeyondCode\\LaravelWebSockets\\' => 29,
+            'Barryvdh\\Snappy\\' => 16,
             'Barryvdh\\LaravelIdeHelper\\' => 26,
             'Barryvdh\\Debugbar\\' => 18,
             'BaconQrCode\\' => 12,
@@ -282,9 +287,9 @@ class ComposerStaticInitf2f22824e8ad1705fb551409b905cb45
         ),
         'Yajra\\DataTables\\' => 
         array (
-            0 => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src',
+            0 => __DIR__ . '/..' . '/yajra/laravel-datatables-buttons/src',
             1 => __DIR__ . '/..' . '/yajra/laravel-datatables-html/src',
-            2 => __DIR__ . '/..' . '/yajra/laravel-datatables-buttons/src',
+            2 => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src',
         ),
         'WireUi\\' => 
         array (
@@ -508,8 +513,8 @@ class ComposerStaticInitf2f22824e8ad1705fb551409b905cb45
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -634,6 +639,10 @@ class ComposerStaticInitf2f22824e8ad1705fb551409b905cb45
         'L5Swagger\\' => 
         array (
             0 => __DIR__ . '/..' . '/darkaonline/l5-swagger/src',
+        ),
+        'Knp\\Snappy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy',
         ),
         'Jorenvh\\Share\\' => 
         array (
@@ -812,6 +821,10 @@ class ComposerStaticInitf2f22824e8ad1705fb551409b905cb45
         array (
             0 => __DIR__ . '/..' . '/beyondcode/laravel-websockets/src',
         ),
+        'Barryvdh\\Snappy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src',
+        ),
         'Barryvdh\\LaravelIdeHelper\\' => 
         array (
             0 => __DIR__ . '/..' . '/barryvdh/laravel-ide-helper/src',
@@ -963,6 +976,7 @@ class ComposerStaticInitf2f22824e8ad1705fb551409b905cb45
         'App\\Http\\Controllers\\NewsInterest' => __DIR__ . '/../..' . '/app/Http/Controllers/NewsInterest.php',
         'App\\Http\\Controllers\\OpenApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/OpenApiController.php',
         'App\\Http\\Controllers\\OpportunityTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/OpportunityTypeController.php',
+        'App\\Http\\Controllers\\PDFController' => __DIR__ . '/../..' . '/app/Http/Controllers/PDFController.php',
         'App\\Http\\Controllers\\PartnerController' => __DIR__ . '/../..' . '/app/Http/Controllers/PartnerController.php',
         'App\\Http\\Controllers\\PaymentMethodController' => __DIR__ . '/../..' . '/app/Http/Controllers/PaymentMethodController.php',
         'App\\Http\\Controllers\\PermissionController' => __DIR__ . '/../..' . '/app/Http/Controllers/PermissionController.php',
@@ -1191,6 +1205,9 @@ class ComposerStaticInitf2f22824e8ad1705fb551409b905cb45
         'App\\Http\\Requests\\ValidateRegistrationTypes' => __DIR__ . '/../..' . '/app/Http/Requests/ValidateRegistrationTypes.php',
         'App\\Http\\Requests\\ValidateServices' => __DIR__ . '/../..' . '/app/Http/Requests/ValidateServices.php',
         'App\\Http\\Requests\\ValidateSolution' => __DIR__ . '/../..' . '/app/Http/Requests/ValidateSolution.php',
+        'App\\Http\\Requests\\ValidateStartUpSolution' => __DIR__ . '/../..' . '/app/Http/Requests/ValidateStartUpSolution.php',
+        'App\\Http\\Requests\\ValidateStartupRegistration' => __DIR__ . '/../..' . '/app/Http/Requests/ValidateStartupRegistration.php',
+        'App\\Http\\Requests\\ValidateStartupTeam' => __DIR__ . '/../..' . '/app/Http/Requests/ValidateStartupTeam.php',
         'App\\Http\\Requests\\ValidateTraining' => __DIR__ . '/../..' . '/app/Http/Requests/ValidateTraining.php',
         'App\\Http\\Requests\\ValidateUpdateCompanyRepresentative' => __DIR__ . '/../..' . '/app/Http/Requests/ValidateUpdateCompanyRepresentative.php',
         'App\\Http\\Requests\\ValidateUpdateUser' => __DIR__ . '/../..' . '/app/Http/Requests/ValidateUpdateUser.php',
@@ -1319,6 +1336,9 @@ class ComposerStaticInitf2f22824e8ad1705fb551409b905cb45
         'App\\Models\\SolutionPlatform' => __DIR__ . '/../..' . '/app/Models/SolutionPlatform.php',
         'App\\Models\\Specialty' => __DIR__ . '/../..' . '/app/Models/Specialty.php',
         'App\\Models\\StartupCategory' => __DIR__ . '/../..' . '/app/Models/StartupCategory.php',
+        'App\\Models\\StartupCompanyProfile' => __DIR__ . '/../..' . '/app/Models/StartupCompanyProfile.php',
+        'App\\Models\\StartupCompanyTeam' => __DIR__ . '/../..' . '/app/Models/StartupCompanyTeam.php',
+        'App\\Models\\StartupSolution' => __DIR__ . '/../..' . '/app/Models/StartupSolution.php',
         'App\\Models\\StartupSubCategory' => __DIR__ . '/../..' . '/app/Models/StartupSubCategory.php',
         'App\\Models\\StrategicOriantation' => __DIR__ . '/../..' . '/app/Models/StrategicOriantation.php',
         'App\\Models\\StudyLevel' => __DIR__ . '/../..' . '/app/Models/StudyLevel.php',
@@ -1521,6 +1541,15 @@ class ComposerStaticInitf2f22824e8ad1705fb551409b905cb45
         'Barryvdh\\Reflection\\DocBlock\\Tag\\VarTag' => __DIR__ . '/..' . '/barryvdh/reflection-docblock/src/Barryvdh/Reflection/DocBlock/Tag/VarTag.php',
         'Barryvdh\\Reflection\\DocBlock\\Tag\\VersionTag' => __DIR__ . '/..' . '/barryvdh/reflection-docblock/src/Barryvdh/Reflection/DocBlock/Tag/VersionTag.php',
         'Barryvdh\\Reflection\\DocBlock\\Type\\Collection' => __DIR__ . '/..' . '/barryvdh/reflection-docblock/src/Barryvdh/Reflection/DocBlock/Type/Collection.php',
+        'Barryvdh\\Snappy\\Facades\\SnappyImage' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/Facades/SnappyImage.php',
+        'Barryvdh\\Snappy\\Facades\\SnappyPdf' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/Facades/SnappyPdf.php',
+        'Barryvdh\\Snappy\\IlluminateSnappyImage' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/IlluminateSnappyImage.php',
+        'Barryvdh\\Snappy\\IlluminateSnappyPdf' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/IlluminateSnappyPdf.php',
+        'Barryvdh\\Snappy\\ImageWrapper' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/ImageWrapper.php',
+        'Barryvdh\\Snappy\\LumenServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/LumenServiceProvider.php',
+        'Barryvdh\\Snappy\\PdfFaker' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/PdfFaker.php',
+        'Barryvdh\\Snappy\\PdfWrapper' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/PdfWrapper.php',
+        'Barryvdh\\Snappy\\ServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/ServiceProvider.php',
         'BeyondCode\\LaravelWebSockets\\Apps\\App' => __DIR__ . '/..' . '/beyondcode/laravel-websockets/src/Apps/App.php',
         'BeyondCode\\LaravelWebSockets\\Apps\\AppProvider' => __DIR__ . '/..' . '/beyondcode/laravel-websockets/src/Apps/AppProvider.php',
         'BeyondCode\\LaravelWebSockets\\Apps\\ConfigAppProvider' => __DIR__ . '/..' . '/beyondcode/laravel-websockets/src/Apps/ConfigAppProvider.php',
@@ -4476,6 +4505,11 @@ class ComposerStaticInitf2f22824e8ad1705fb551409b905cb45
         'Jorenvh\\Share\\Share' => __DIR__ . '/..' . '/jorenvanhocht/laravel-share/src/Share.php',
         'Jorenvh\\Share\\ShareFacade' => __DIR__ . '/..' . '/jorenvanhocht/laravel-share/src/ShareFacade.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
+        'Knp\\Snappy\\AbstractGenerator' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/AbstractGenerator.php',
+        'Knp\\Snappy\\Exception\\FileAlreadyExistsException' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/Exception/FileAlreadyExistsException.php',
+        'Knp\\Snappy\\GeneratorInterface' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/GeneratorInterface.php',
+        'Knp\\Snappy\\Image' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/Image.php',
+        'Knp\\Snappy\\Pdf' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/Pdf.php',
         'L5Swagger\\ConfigFactory' => __DIR__ . '/..' . '/darkaonline/l5-swagger/src/ConfigFactory.php',
         'L5Swagger\\Console\\GenerateDocsCommand' => __DIR__ . '/..' . '/darkaonline/l5-swagger/src/Console/GenerateDocsCommand.php',
         'L5Swagger\\Exceptions\\L5SwaggerException' => __DIR__ . '/..' . '/darkaonline/l5-swagger/src/Exceptions/L5SwaggerException.php',

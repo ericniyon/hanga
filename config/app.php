@@ -169,7 +169,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Barryvdh\Snappy\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -237,7 +237,8 @@ return [
         'Share' => Jorenvh\Share\ShareFacade::class,
 
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
-        // 'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
     ],
 
 ];

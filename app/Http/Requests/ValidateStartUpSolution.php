@@ -13,7 +13,7 @@ class ValidateStartUpSolution extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,9 +24,14 @@ class ValidateStartUpSolution extends FormRequest
     public function rules()
     {
         return [
-            'solution_type' => ['required', 'string'],
+            // 'client_id' => ['required', 'string'],
+            'solution_type' => 'required',
+            'solution_status' => 'required',
             'name' => ['required', 'string', 'min:1'],
-            'description' => ['required', 'string', 'max:500'],
+            'description' => ['required', 'string', 'max:200'],
+            'capacity' => ['required', 'string'],
+            'active_users' => ['required', 'string'],
+            // 'product_link' => ['nullable'],
         ];
     }
 }

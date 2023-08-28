@@ -24,11 +24,13 @@ class ValidateStartupTeam extends FormRequest
     public function rules(): array
     {
         return [
-            'team_firstname'    => ['required_if:current_step,2'],
-            'team_lastname'     => ['required_if:current_step,2'],
-            'team_position'     => ['required_if:current_step,2'],
-            'team_phone'        => ['required_if:current_step,2'],
-            'team_email'        => ['required_if:current_step,2', 'unique:startup_company_teams,team_email'],
+            'team_firstname'    => ['required'],
+            'team_lastname'     => ['required'],
+            'team_position'     => ['required'],
+            'team_phone'        => ['required'],
+            'linkedin_profile'  => ['required'],
+            'team_mate_description'  => ['required'],
+            'team_email'        => ['required', 'email', 'unique:startup_company_teams,team_email'],
         ];
     }
 }

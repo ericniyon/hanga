@@ -39,6 +39,17 @@
                         <input type="text" name="team_position" id="team_position" class="form-control rounded">
                     </div>
 
+                    <div class="form-group">
+                        <label for="linkedin_profile">LinkedIn Profiles</label>
+                        <input type="text" name="linkedin_profile" id="linkedin_profile"
+                            class="form-control rounded">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="team_mate_description">Short Description</label>
+                        <textarea type="text" name="team_mate_description" id="team_mate_description" class="form-control rounded"></textarea>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     @include('partials._modal_footer_buttons')

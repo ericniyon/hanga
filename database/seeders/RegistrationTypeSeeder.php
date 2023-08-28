@@ -14,7 +14,7 @@ class RegistrationTypeSeeder extends Seeder
      */
     public function run()
     {
-        $types = ['DSP', 'iWorker', 'MSME'];
+        $types = ['DSP', 'iWorker', 'MSME', 'STARTUP'];
 
         RegistrationType::truncate();
 

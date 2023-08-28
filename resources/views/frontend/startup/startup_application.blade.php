@@ -21,6 +21,7 @@
                 <div class="wizard wizard-3" id="kt_wizard_v3" data-wizard-state="step-first" data-wizard-clickable="true">
                     <!--begin: Wizard Nav-->
                     <div class="wizard-nav">
+                        {{-- company information --}}
                         <div class="wizard-steps px-0 pb-8 px-lg-0 py-lg-3">
                             <!--begin::Wizard Step 1 Nav-->
                             <div class="wizard-step" data-wizard-type="step" data-wizard-state="current">
@@ -32,13 +33,13 @@
                             </div>
                             <!--end::Wizard Step 1 Nav-->
 
+                            {{-- team section --}}
                             <div class="wizard-step" data-wizard-type="step">
                                 <div class="wizard-label">
                                     <h3 class="wizard-title">Team</h3>
                                     <div class="wizard-bar"></div>
                                 </div>
                             </div>
-
 
                             <div class="wizard-step" data-wizard-type="step">
                                 <div class="wizard-label">
@@ -51,7 +52,28 @@
 
                             <div class="wizard-step" data-wizard-type="step">
                                 <div class="wizard-label">
-                                    <h3 class="wizard-title">Investments & Acheivements</h3>
+                                    <h3 class="wizard-title">Business Model</h3>
+                                    <div class="wizard-bar"></div>
+                                </div>
+                            </div>
+
+                            <div class="wizard-step" data-wizard-type="step">
+                                <div class="wizard-label">
+                                    <h3 class="wizard-title">Traction </h3>
+                                    <div class="wizard-bar"></div>
+                                </div>
+                            </div>
+
+                            <div class="wizard-step" data-wizard-type="step">
+                                <div class="wizard-label">
+                                    <h3 class="wizard-title">Investment & Fundraising </h3>
+                                    <div class="wizard-bar"></div>
+                                </div>
+                            </div>
+
+                            <div class="wizard-step" data-wizard-type="step">
+                                <div class="wizard-label">
+                                    <h3 class="wizard-title">Review </h3>
                                     <div class="wizard-bar"></div>
                                 </div>
                             </div>
@@ -71,6 +93,7 @@
                                 <input type="hidden" id="application_id" name="application_id"
                                     value="{{ $model->id ?? 0 }}">
 
+                                {{-- company information --}}
                                 <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
                                     <h4 class="mb-10 font-weight-bold text-dark">
                                         @lang('client_registration.business_identification')
@@ -135,7 +158,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="website">@lang('client_registration.website')</label>
-                                                        <input type="number" class="form-control form-control-sm"
+                                                        <input type="url" class="form-control form-control-sm"
                                                             name="website" id="website" min="0"
                                                             value="{{ $model->website ?? '' }}"
                                                             placeholder="@lang('client_registration.website')">
@@ -146,7 +169,7 @@
                                     </div>
 
                                     <div class="row align-items-center">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <div class="d-md-flex justify-content-between align-content-center mb-1">
                                                     <label for="logo">
@@ -154,7 +177,8 @@
                                                     </label>
                                                     @if ($model->logo ?? 0)
                                                         <a target="_blank"
-                                                            href="{{ route('msme.download.file', ['id' => encryptId($model->id), 'type' => 'rdb']) }}"
+                                                            href="{{ Storage::disk('logos')->url($model->logo) }}"
+                                                            download="{{ $model->company_name }}-logo"
                                                             class="btn btn-light-info rounded-pill btn-sm py-1">
                                                             @include('partials.buttons._svg_download_icon')
                                                             <span class="d-none d-md-inline">
@@ -172,7 +196,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <div class="d-md-flex justify-content-between align-content-center mb-1">
                                                     <label for="rdb_certificate">@lang('client_registration.rdb_certificate')
@@ -180,7 +204,8 @@
                                                     </label>
                                                     @if ($model->rdb_certificate ?? 0)
                                                         <a target="_blank"
-                                                            href="{{ route('msme.download.file', ['id' => encryptId($model->id), 'type' => 'rdb']) }}"
+                                                            download="{{ $model->company_name }}-certificate"
+                                                            href="{{ Storage::disk('rdb_certificate')->url($model->rdb_certificate) }}"
                                                             class="btn btn-light-info rounded-pill btn-sm py-1">
                                                             @include('partials.buttons._svg_download_icon')
                                                             <span class="d-none d-md-inline">
@@ -195,6 +220,33 @@
                                                         class="custom-file-input" id="rdb_certificate">
                                                     <label class="custom-file-label"
                                                         for="rdb_certificate">@lang('client_registration.choose_file')
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="d-md-flex justify-content-between align-content-center mb-1">
+                                                    <label for="rdb_certificate">Pitch Deck
+                                                        @include('partials._default_allowed_file_info')
+                                                    </label>
+                                                    @if ($model->pitch_deck ?? 0)
+                                                        <a target="_blank"
+                                                            download="{{ $model->company_name }}-pitch_decks"
+                                                            href="{{ Storage::disk('pitch_deck')->url($model->pitch_deck) }}"
+                                                            class="btn btn-light-info rounded-pill btn-sm py-1">
+                                                            @include('partials.buttons._svg_download_icon')
+                                                            <span class="d-none d-md-inline">
+                                                                @lang('client_registration.download')
+                                                            </span>
+                                                        </a>
+                                                    @endif
+
+                                                </div>
+                                                <div class="custom-file">
+                                                    <input type="file" name="pitch_deck" class="custom-file-input"
+                                                        id="pitch_deck">
+                                                    <label class="custom-file-label" for="pitch_deck">@lang('client_registration.choose_file')
                                                     </label>
                                                 </div>
                                             </div>
@@ -249,8 +301,11 @@
                                         <div class="col-md-12">
                                             <div data-limit="800" x-data="{ content: '{{ optional($model)->bio ?? '' }}', limit: $el.dataset.limit, get remaining() { var rem = this.limit - this.content.length; if (rem <= 0) return 0; return rem } }">
                                                 <div class="form-group">
-                                                    <label for="bio" class="d-block font-weight-bolder">bio</label>
-                                                    <textarea class="form-control" name="bio" id="bio" x-model="content" placeholder="bio">{{ optional($model)->bio ?? '' }}</textarea>
+                                                    <label for="bio" class="d-block font-weight-bolder">
+                                                        Short Business Description and Specialization
+                                                    </label>
+                                                    <textarea class="form-control" name="business_description" id="bio" x-model="content"
+                                                        placeholder="Business Description Short and Specialization">{{ optional($model)->bio ?? '' }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -270,6 +325,7 @@
 
                                 </div>
 
+                                {{-- teams section --}}
                                 <div class="pb-5" data-wizard-type="step-content">
                                     <div class="d-flex justify-content-between mb-3">
                                         <h4 class="mb-0 font-weight-bold text-dark">
@@ -308,10 +364,17 @@
                                                         @foreach ($teamMembers as $item)
                                                             <tr>
                                                                 <td>
-                                                                    <span>{{ $item->team_firstname }}</span>
+                                                                    <a href="{{ $item->team_linkedin ?? '#!' }}"
+                                                                        target=" {{ $item->team_linkedin != null ? '_blank' : '' }}">
+                                                                        <span>{{ $item->team_firstname }}</span>
+                                                                    </a>
                                                                 </td>
                                                                 <td>
-                                                                    <span>{{ $item->team_lastname }}</span>
+                                                                    <a href="{{ $item->team_linkedin ?? '#!' }}"
+                                                                        target=" {{ $item->team_linkedin != null ? '_blank' : '' }}">
+                                                                        <span>{{ $item->team_lastname }}</span>
+                                                                    </a>
+
                                                                 </td>
                                                                 <td>
                                                                     <span>{{ $item->team_position }}</span>
@@ -357,10 +420,11 @@
                                     @endif
                                 </div>
 
+                                {{-- product section --}}
                                 <div class="pb-5" data-wizard-type="step-content">
                                     <div class="d-flex justify-content-between mb-3">
                                         <h4 class="mb-0 font-weight-bold text-dark">
-                                            Company Team
+                                            Company Solution
                                         </h4>
                                         <button type="button" id="addSolutionButton"
                                             class="btn btn-info btn-sm font-weight-bolder rounded">
@@ -374,7 +438,7 @@
                                                 @include('partials._alert_info_icon')
                                             </div>
                                             <div class="alert-text">
-                                                You don't have a team mate right now
+                                                You don't have any solution right now
                                             </div>
                                         </div>
                                     @else
@@ -394,7 +458,7 @@
                                                             <tr>
                                                                 <td>
                                                                     <span
-                                                                        class="badge badge-{{ $item->typeColor }} rounded-pill">{{ $item->type }}</span>
+                                                                        class="badge badge-{{ $item->typeColor }} rounded-pill">{{ $item->product_type }}</span>
                                                                 </td>
                                                                 <td>{{ $item->name }}</td>
 
@@ -433,89 +497,384 @@
                                     @endif
                                 </div>
 
+                                {{-- business model --}}
                                 <div class="pb-5" data-wizard-type="step-content">
                                     <div class="row">
                                         <div class="col-md-12">
+                                            <div data-limit="800" x-data="{ content: '{{ optional($model)->target_customers ?? '' }}', limit: $el.dataset.limit, get remaining() { var rem = this.limit - this.content.length; if (rem <= 0) return 0; return rem } }">
+                                                <div class="form-group">
+                                                    <label for="target_customers" class="d-block font-weight-bolder">
+                                                        Target Customers
+                                                    </label>
+                                                    <textarea class="form-control" name="target_customers" id="target_customers" x-model="content"
+                                                        placeholder="Who are your Targeted Customers">{{ optional($model)->target_customers ?? '' }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 row mb-3">
+                                            @php
+                                                $bsmodel = $model == null ? ($business_model = []) : explode(',', $model->business_model);
+                                            @endphp
+                                            <label for="revenue_stream" class="d-block font-weight-bolder col-12">
+                                                Business Model
+                                            </label>
+                                            <div class="col-md-4 my-1">
+                                                <label class="checkbox checkbox-info">
+                                                    <input type="checkbox"
+                                                        {{ in_array('B2B', $bsmodel) ? 'checked' : '' }}
+                                                        name="business_model[]" value="B2B" id="angel">
+                                                    B2B
+                                                    <span class="rounded-0"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4 my-1">
+                                                <label class="checkbox checkbox-info">
+                                                    <input type="checkbox"
+                                                        {{ in_array('B2C', $bsmodel) ? 'checked' : '' }}
+                                                        name="business_model[]" value="B2C" id="angel">
+                                                    B2C
+                                                    <span class="rounded-0"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4 my-1">
+                                                <label class="checkbox checkbox-info">
+                                                    <input type="checkbox"
+                                                        {{ in_array('B2B2C', $bsmodel) ? 'checked' : '' }}
+                                                        name="business_model[]" value="B2B2C" id="angel">
+                                                    B2B2C
+                                                    <span class="rounded-0"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4 my-1">
+                                                <label class="checkbox checkbox-info">
+                                                    <input type="checkbox"
+                                                        {{ in_array('C2C', $bsmodel) ? 'checked' : '' }}
+                                                        name="business_model[]" value="C2C" id="angel">
+                                                    C2C
+                                                    <span class="rounded-0"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4 my-1">
+                                                <label class="checkbox checkbox-info">
+                                                    <input type="checkbox"
+                                                        {{ in_array('C2B', $bsmodel) ? 'checked' : '' }}
+                                                        name="business_model[]" value="C2B" id="angel">
+                                                    C2B
+                                                    <span class="rounded-0"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
                                             <div data-limit="800" x-data="{ content: '{{ optional($model)->revenue_stream ?? '' }}', limit: $el.dataset.limit, get remaining() { var rem = this.limit - this.content.length; if (rem <= 0) return 0; return rem } }">
                                                 <div class="form-group">
                                                     <label for="revenue_stream" class="d-block font-weight-bolder">Revenue
                                                         Stream</label>
-                                                    <textarea class="form-control" name="revenue_stream" id="revenue_stream" x-model="content"
-                                                        placeholder="Revenue Stream">{{ optional($model)->revenue_stream ?? '' }}</textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <div data-limit="800" x-data="{ content: '{{ optional($model)->market_size ?? '' }}', limit: $el.dataset.limit, get remaining() { var rem = this.limit - this.content.length; if (rem <= 0) return 0; return rem } }">
-                                                <div class="form-group">
-                                                    <label for="market_size" class="d-block font-weight-bolder">Market
-                                                        Size</label>
-                                                    <textarea class="form-control" name="market_size" id="market_size" x-model="content" placeholder="Market Size">{{ optional($model)->market_size ?? '' }}</textarea>
+                                                    <input type="text" class="form-control" name="revenue_stream"
+                                                        id="revenue_stream" x-model="content"
+                                                        placeholder="Revenue Stream"
+                                                        {{ optional($model)->revenue_stream ?? '' }} />
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
-                                            <div data-limit="800" x-data="{ content: '{{ optional($model)->acheivement ?? '' }}', limit: $el.dataset.limit, get remaining() { var rem = this.limit - this.content.length; if (rem <= 0) return 0; return rem } }">
+                                            <div data-limit="800" x-data="{ content: '{{ optional($model)->customer_value ?? '' }}', limit: $el.dataset.limit, get remaining() { var rem = this.limit - this.content.length; if (rem <= 0) return 0; return rem } }">
                                                 <div class="form-group">
-                                                    <label for="acheivement"
-                                                        class="d-block font-weight-bolder">Acheivement</label>
-                                                    <input type="text" class="form-control" name="acheivement"
-                                                        id="acheivement" x-model="content" placeholder="Acheivement"
-                                                        {{ optional($model)->acheivement ?? '' }} />
+                                                    <label for="customer_value" class="d-block font-weight-bolder">What
+                                                        value do you bring to
+                                                        customers</label>
+                                                    <textarea class="form-control" name="customer_value" id="customer_value" x-model="content"
+                                                        placeholder="What value do you bring to
+                                                        customers">{{ optional($model)->customer_value ?? '' }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
-                                            <div data-limit="800" x-data="{ content: '{{ optional($model)->acheivement_date ?? '' }}', limit: $el.dataset.limit, get remaining() { var rem = this.limit - this.content.length; if (rem <= 0) return 0; return rem } }">
+                                            <div data-limit="800" x-data="{ content: '{{ optional($model)->gmt_channel ?? '' }}', limit: $el.dataset.limit, get remaining() { var rem = this.limit - this.content.length; if (rem <= 0) return 0; return rem } }">
                                                 <div class="form-group">
-                                                    <label for="acheivement_date"
-                                                        class="d-block font-weight-bolder">Acheivement Date</label>
-                                                    <input type="date" class="form-control" name="acheivement_date"
-                                                        id="acheivement_date" x-model="content"
-                                                        placeholder="Acheivement Date"{{ optional($model)->acheivement_date ?? '' }} />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div data-limit="800" x-data="{ content: '{{ optional($model)->fund_raising ?? '' }}', limit: $el.dataset.limit, get remaining() { var rem = this.limit - this.content.length; if (rem <= 0) return 0; return rem } }">
-                                                <div class="form-group">
-                                                    <label for="fund_raising" class="d-block font-weight-bolder">Fund
-                                                        Raising</label>
-                                                    <input type="text" class="form-control" name="fund_raising"
-                                                        id="fund_raising" x-model="content" placeholder="Fund Raising"
-                                                        {{ optional($model)->fund_raising ?? '' }} />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div data-limit="800" x-data="{ content: '{{ optional($model)->fund_raising_reason ?? '' }}', limit: $el.dataset.limit, get remaining() { var rem = this.limit - this.content.length; if (rem <= 0) return 0; return rem } }">
-                                                <div class="form-group">
-                                                    <label for="fund_raising_reason"
-                                                        class="d-block font-weight-bolder">Fund Raising Reason</label>
-                                                    <textarea class="form-control" name="fund_raising_reason" id="fund_raising_reason" x-model="content"
-                                                        placeholder="Fund Raising Reason">{{ optional($model)->fund_raising_reason ?? '' }}</textarea>
+                                                    <label for="gmt_channel" class="d-block font-weight-bolder">GMT
+                                                        Channels</label>
+                                                    <input type="text" class="form-control" name="gmt_channel"
+                                                        id="gmt_channel" x-model="content" placeholder="GMT Channel"
+                                                        {{ optional($model)->gmt_channel ?? '' }} />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
+                                {{-- Traction --}}
+                                <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                                    <h4 class="mb-10 font-weight-bold text-dark">
+                                        Traction
+                                    </h4>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="market_size_tam">Market size (TAM)</label>
+                                                <input type="text" class="form-control form-control-sm"
+                                                    name="market_size_tam" id="market_size_tam"
+                                                    value="{{ $model->market_size_tam ?? '' }}" placeholder="TAM">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="market_size_sam">Market size (SAM)</label>
+                                                <input type="text" class="form-control form-control-sm"
+                                                    name="market_size_sam" id="market_size_sam"
+                                                    value="{{ $model->market_size_sam ?? '' }}" placeholder="SAM">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="market_size_som">Market size (SOM)</label>
+                                                <input type="text" class="form-control form-control-sm"
+                                                    name="market_size_som" id="market_size_som"
+                                                    value="{{ $model->market_size_som ?? '' }}" placeholder="SOM">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="active_users">Number of Active Users</label>
+                                                <input type="number" class="form-control form-control-sm"
+                                                    name="active_users" id="active_users"
+                                                    value="{{ $model->active_users ?? '' }}"
+                                                    placeholder="Number of Active Users">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="active_users">Number of Paying Customers</label>
+                                                <input type="number" class="form-control form-control-sm"
+                                                    name="paying_customers" id="paying_customers"
+                                                    value="{{ $model->paying_customers ?? '' }}"
+                                                    placeholder="Number of Paying Customers">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="anual_recuring_revenue">Anual Recuring Revenue</label>
+                                                <input type="number" class="form-control form-control-sm"
+                                                    name="anual_recuring_revenue" id="anual_recuring_revenue"
+                                                    value="{{ $model->anual_recuring_revenue ?? '' }}"
+                                                    placeholder="Number of Active Users">
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="revenue_frequency">Revenue Frequency</label>
+                                                <select name="revenue_frequency" id="revenue_frequency"
+                                                    class="custom-select">
+                                                    <option value="">@lang('client_registration.choose')</option>
+                                                    <option value="daily">Daily</option>
+                                                    <option value="weekly">Weekly</option>
+                                                    <option value="monthly">Monthly</option>
+                                                    <option value="quatery">Quatery</option>
+                                                    <option value="bi-anual">Bi Anual</option>
+                                                    <option value="anualy">Anualy</option>
+                                                </select>
+                                            </div>
+                                        </div> --}}
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="customer_growth_rate">Customer Growth Rate</label>
+                                                <input type="number" class="form-control form-control-sm"
+                                                    name="customer_growth_rate" id="customer_growth_rate"
+                                                    value="{{ $model->customer_growth_rate ?? '' }}" max="100"
+                                                    min="0" placeholder="Customer Growth Rate">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="gross_transaction_value">Gross Transaction Value (if
+                                                    any)</label>
+                                                <input type="text" class="form-control form-control-sm"
+                                                    name="gross_transaction_value" id="gross_transaction_value"
+                                                    value="{{ $model->gross_transaction_value ?? '' }}"
+                                                    placeholder="Gross Transaction Value (if any)">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                {{-- Investment & foundraising --}}
+                                <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                                    <h4 class="mb-10 font-weight-bold text-dark">
+                                        Investment & fundraising
+                                    </h4>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="active_users">Current Startup Stage</label>
+                                                <select name="current_startup_stage" id="current_startup_stage"
+                                                    class="custom-select">
+                                                    <option value="">@lang('client_registration.choose')</option>
+                                                    <option
+                                                        {{ ($model == null ? '' : $model->current_startup_stage == 'pre-seed') ? 'selected' : '' }}
+                                                        value="pre-seed">pre-seed</option>
+                                                    <option
+                                                        {{ ($model == null ? '' : $model->current_startup_stage == 'seed') ? 'selected' : '' }}
+                                                        value="seed">
+                                                        Seed</option>
+                                                    <option
+                                                        {{ ($model == null ? '' : $model->current_startup_stage == 'series a') ? 'selected' : '' }}
+                                                        value="series a">Series A</option>
+                                                    <option
+                                                        {{ ($model == null ? '' : $model->current_startup_stage == 'series b') ? 'selected' : '' }}
+                                                        value="series b">
+                                                        Series B</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="previous_investment_size">Previous Investment Size</label>
+                                                <input type="number" class="form-control form-control-sm"
+                                                    name="previous_investment_size" id="previous_investment_size"
+                                                    value="{{ $model->previous_investment_size ?? '' }}"
+                                                    placeholder="Previous Investment Size">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="active_users">Type Of Investment</label>
+                                                <select name="previous_investment_type" id="previous_investment_type"
+                                                    class="custom-select">
+                                                    <option value="">@lang('client_registration.choose')</option>
+                                                    <option
+                                                        {{ ($model == null ? '' : $model->previous_investment_type == 'n/a') ? 'selected' : '' }}
+                                                        value="n/a">N/A</option>
+                                                    <option
+                                                        {{ ($model == null ? '' : $model->previous_investment_type == 'grant') ? 'selected' : '' }}
+                                                        value="grant">Grant</option>
+                                                    <option
+                                                        {{ ($model == null ? '' : $model->previous_investment_type == 'equity') ? 'selected' : '' }}
+                                                        value="equity">Equity</option>
+                                                    <option
+                                                        {{ ($model == null ? '' : $model->previous_investment_type == 'dept') ? 'selected' : '' }}
+                                                        value="dept">Dept</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <strong class="mb-3">
+                                                    Target Investors
+                                                </strong>
+                                                <div class="row">
+                                                    @php
+                                                        $tgtinvestor = $model == null ? ($target_investors = []) : explode(',', $model->target_investors);
+                                                    @endphp
+                                                    <div class="col-md-4 my-1">
+                                                        <label class="checkbox checkbox-info">
+                                                            <input type="checkbox" name="target_investors[]"
+                                                                value="angel" id="angel"
+                                                                {{ in_array('angel', $tgtinvestor) ? 'checked' : '' }}>
+                                                            Angel
+                                                            <span class="rounded-0"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-4 my-1">
+                                                        <label class="checkbox checkbox-info">
+                                                            <input type="checkbox"
+                                                                {{ in_array('investors', $tgtinvestor) ? 'checked' : '' }}
+                                                                name="target_investors[]" value="investors"
+                                                                id="Investors">
+                                                            Investors
+                                                            <span class="rounded-0"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-4 my-1">
+                                                        <label class="checkbox checkbox-info">
+                                                            <input type="checkbox"
+                                                                {{ in_array('VCs', $tgtinvestor) ? 'checked' : '' }}
+                                                                name="target_investors[]" value="VCs" id="VCs">
+                                                            VCs
+                                                            <span class="rounded-0"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-4 my-1">
+                                                        <label class="checkbox checkbox-info">
+                                                            <input type="checkbox"
+                                                                {{ in_array('Corporates', $tgtinvestor) ? 'checked' : '' }}
+                                                                name="target_investors[]" value="Corporates"
+                                                                id="Corporates">
+                                                            Corporates
+                                                            <span class="rounded-0"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-4 my-1">
+                                                        <label class="checkbox checkbox-info">
+                                                            <input type="checkbox"
+                                                                {{ in_array('Grants', $tgtinvestor) ? 'checked' : '' }}
+                                                                name="target_investors[]" value="Grants" id="Grants">
+                                                            Grants
+                                                            <span class="rounded-0"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="target_investment_size">Target Investment Size</label>
+                                                <input type="number" class="form-control form-control-sm"
+                                                    name="target_investment_size" id="target_investment_size"
+                                                    value="{{ $model->target_investment_size ?? '' }}"
+                                                    placeholder="Target Investment Size">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="fundraising_breakdown">Fundraising reason/ Breakdown</label>
+                                                <textarea name="fundraising_breakdown" class="form-control" id="" cols="30" rows="10">{{ $model == null ? '' : $model->fundraising_breakdown }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                {{-- review --}}
                                 <div class="pb-5 " data-wizard-type="step-content">
                                     <div class="d-flex justify-content-between mb-3">
                                         <h4 class="mb-0 font-weight-bold text-dark">
                                             {{ __('app.review_submit') }}
                                         </h4>
+                                        <a href="{{ $model == null ? '' : route('onepager.download', $model->id) }}"
+                                            class="btn btn-light-success font-weight-bolder text-uppercase rounded btn-sm px-4">
+                                            Download PDF
+                                        </a>
                                     </div>
 
-                                    {{-- @if ($currentStep == $steps)
+                                    @if ($currentStep == $steps)
                                         <x-msme-registration-details :review="true" :model="$model"
                                             card-classes="border shadow-sm" />
-                                    @endif --}}
+                                    @endif
 
                                 </div>
 

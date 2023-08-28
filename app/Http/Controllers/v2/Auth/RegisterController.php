@@ -16,6 +16,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Validator;
 use App\Http\Controllers\Controller;
+use Hash;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
 
@@ -86,8 +87,10 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'phone' => $data['phone'],
             'name_slug' => "$slug-$id",
+            'password' => Hash::make($data['phone']),
             'otp' => $this->getOtp(),
-            'expires_at' => $this->getAddMinutes()
+            'expires_at' => $this->getAddMinutes(),
+            'verified_at' => now(),
         ]);
     }
 
@@ -113,7 +116,7 @@ class RegisterController extends Controller
 
         event(new Registered($client = $this->create($request->all())));
 
-//        $this->guard()->login($user);
+        //        $this->guard()->login($user);
         // send otp
         $this->sendOtp($client);
 
@@ -125,8 +128,7 @@ class RegisterController extends Controller
     {
         $phone_number = decrypt($request->input('phone'));
         $client = Client::getClientByPhoneNumber($phone_number);
-        if (is_null($client))
-        {
+        if (is_null($client)) {
             return back()->with(['error' => 'User not found']);
         }
         $emailExploded = substr(explode('@', $client->email)[0], -2) . '@' . explode('@', $client->email)[1];
@@ -143,8 +145,7 @@ class RegisterController extends Controller
         $phone = decrypt($request->input('phone'));
         $client = Client::getClientByPhoneNumber($phone);
 
-        if (is_null($client))
-        {
+        if (is_null($client)) {
             return back()->with(['error' => 'Invalid phone number provided']);
         }
 
@@ -174,16 +175,14 @@ class RegisterController extends Controller
             ['phone', '=', $phone_number],
             ['otp', '=', $otp]
         ])->first();
-        if (is_null($client))
-        {
+        if (is_null($client)) {
             session()->flash('error', __('app.Invalid code provided'));
             return back()->withInput()
                 ->withErrors(['otp' => __('app.Invalid code provided')]);
         }
 
 
-        if ($client->expires_at < now())
-        {
+        if ($client->expires_at < now()) {
             session()->flash('error', __("app.The code provided has been expired, you can resend the code to get a new one"));
             return back()->withInput()
                 ->withErrors(['otp' => __("app.The code provided has been expired, you can resend the code to get a new one")]);
@@ -213,8 +212,7 @@ class RegisterController extends Controller
         $token = $request->input('token');
 
         $client = Client::query()->where('verify_token', '=', $token)->first();
-        if (is_null($client))
-        {
+        if (is_null($client)) {
             return back()->withErrors($request, ['password' => __("app.Invalid token provided")]);
         }
         $client->password = bcrypt($request->input('password'));
@@ -236,5 +234,4 @@ class RegisterController extends Controller
     {
         return Auth::guard('client');
     }
-
 }

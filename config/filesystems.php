@@ -56,6 +56,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'pitch_deck' => [
+            'driver' => 'local',
+            'root' => public_path('documents/pitch_deck'),
+            'url' => env('APP_URL') . '/documents/pitch_deck',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
