@@ -299,13 +299,27 @@
 
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div data-limit="800" x-data="{ content: '{{ optional($model)->bio ?? '' }}', limit: $el.dataset.limit, get remaining() { var rem = this.limit - this.content.length; if (rem <= 0) return 0; return rem } }">
+                                            <div>
                                                 <div class="form-group">
                                                     <label for="bio" class="d-block font-weight-bolder">
                                                         Short Business Description and Specialization
                                                     </label>
                                                     <textarea class="form-control" name="business_description" id="bio" x-model="content"
-                                                        placeholder="Business Description Short and Specialization">{{ optional($model)->bio ?? '' }}</textarea>
+                                                        placeholder="Business Description Short and Specialization">{{ $model == null ? '' : $model->bio }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div>
+                                                <div class="form-group">
+                                                    <label for="problem" class="d-block font-weight-bolder">
+                                                        Problem
+                                                    </label>
+                                                    <textarea class="form-control" name="problem" id="problem" x-model="content" placeholder="Problem">{{ $model == null ? '' : $model->problem }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -709,6 +723,88 @@
                                         </div>
                                     </div>
 
+                                    <hr>
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <h4 class="mb-0 font-weight-bold text-dark">
+                                            Company publication
+                                        </h4>
+                                        <button type="button" data-toggle="modal" data-target="#addpublicationModal"
+                                            class="btn btn-info btn-sm font-weight-bolder rounded">
+                                            @include('partials._add_svg_icon')
+                                            Add
+                                        </button>
+                                    </div>
+                                    @if ($publications->count() == 0)
+                                        <div class="alert alert-custom alert-notice alert-light-warning  rounded-0">
+                                            <div class="alert-icon">
+                                                @include('partials._alert_info_icon')
+                                            </div>
+                                            <div class="alert-text">
+                                                You don't have any publication
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="card card-body p-0 rounded-sm  shadow-none">
+                                            <div class="table-responsive">
+                                                <table class="table table-head-solid table-head-custom">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Title</th>
+                                                            <th>Type</th>
+                                                            {{-- <th style="min-width: 100px;">@lang('client_registration.options')</th> --}}
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($publications as $key => $item)
+                                                            <tr>
+                                                                <td>
+                                                                    {{ $key + 1 }}
+                                                                </td>
+                                                                <td>
+                                                                    <a href="{{ $item->url ?? '#!' }}"
+                                                                        target=" {{ $item->url != null ? '_blank' : '' }}">
+                                                                        <span>{{ $item->title }}</span>
+                                                                    </a>
+
+                                                                </td>
+                                                                <td>
+                                                                    <span>{{ $item->type }}</span>
+                                                                </td>
+
+                                                                {{-- <td>
+                                                                    <div class="">
+                                                                        <button type="button"
+                                                                            data-id="{{ $item->id }}"
+                                                                            data-name="{{ $item->team_firstname }}"
+                                                                            data-type="{{ $item->type }}"
+                                                                            data-description="{{ $item->description }}"
+                                                                            data-toggle="tooltip"
+                                                                            title="{{ __('client_registration.edit') }}"
+                                                                            class="btn btn-sm btn-light-info js-edit rounded-pill">
+                                                                            @include('partials.buttons._edit_svg_icon')
+                                                                            <span
+                                                                                class="d-none d-md-inline">@lang('client_registration.edit')</span>
+                                                                        </button>
+                                                                        <a href="{{ route('client.projects.destroy', encryptId($item->id)) }}"
+                                                                            data-toggle="tooltip"
+                                                                            title="{{ __('client_registration.delete') }}"
+                                                                            class="btn btn-sm btn-danger js-delete rounded-pill">
+                                                                            @include('partials.buttons._trash_svg_icon')
+                                                                            <span class="d-none d-md-inline">
+                                                                                @lang('client_registration.delete')
+                                                                            </span>
+                                                                        </a>
+                                                                    </div>
+                                                                </td> --}}
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    @endif
+
                                 </div>
 
                                 {{-- Investment & foundraising --}}
@@ -894,6 +990,7 @@
         </div>
     </div>
 
+    @include('partials._msme_add_publication_modal')
     @include('partials._msme_add_team_modal')
     @include('partials._msme_add_solution_modal')
     @include('partials._certification_award_modal')
@@ -905,6 +1002,7 @@
     {!! JsValidator::formRequest(\App\Http\Requests\ValidateStartupRegistration::class, '#formCreate') !!}
     {!! JsValidator::formRequest(\App\Http\Requests\ValidateStartUpSolution::class, '#formSaveSolution') !!}
     {!! JsValidator::formRequest(\App\Http\Requests\ValidateStartupTeam::class, '#formSaveTeam') !!}
+    {!! JsValidator::formRequest(\App\Http\Requests\ValidateStartUpPublication::class, '#formpub') !!}
 
     <script src="{{ asset('frontend/js/msme.js') }}"></script>
     <script src="{{ asset('js/scripts.bundle.js') }}"></script>

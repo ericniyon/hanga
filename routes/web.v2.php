@@ -30,7 +30,7 @@ Route::group(['as' => 'v2.'], function () {
     Route::get('/apply/{application}', DetailedApplication::class)->name('detailed.apply');
 
 
-    Route::get('application/success', function(){
+    Route::get('application/success', function () {
         return view('livewire.frontend.success');
     })->name('application.success');
 
@@ -75,7 +75,7 @@ Route::group(['as' => 'v2.'], function () {
             Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
             Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 
-        // google login
+            // google login
             Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('redirectToGoogle');
             Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
@@ -98,8 +98,6 @@ Route::group(['as' => 'v2.'], function () {
             Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('forgot.password');
             Route::post('/password/email', [LoginController::class, 'sendPasswordReset'])->name('password.email');
         });
-
-
 });
 
 
@@ -110,10 +108,10 @@ Route::get('/equipment', [DigitalFinanceController::class, 'equipment'])->name('
 Route::get('/digital', [DigitalFinanceController::class, 'digital'])->name('equipment');
 Route::get('/otherLoans', [DigitalFinanceController::class, 'other'])->name('other');
 Route::get('/mortage', [DigitalFinanceController::class, 'mortage'])->name('mortage');
-Route::get('/current_account',[AccountFinanceController::class,'currentAccount'])->name('current_account');
+Route::get('/current_account', [AccountFinanceController::class, 'currentAccount'])->name('current_account');
 
-Route::get('/fixed_term_account',[AccountFinanceController::class,'fixedAccount'])->name('fixed_account');
-Route::get('/savings_account',[AccountFinanceController::class,'savingsAccount'])->name('savings_account');
-Route::get('/credit_card',[CreditCardController::class,'creditCard'])->name('credit_card');
-Route::get('/debit_card',[CreditCardController::class,'debitCard'])->name('debit_card');
-Route::get('/eBanking',[eBankingController::class,'eBanking'])->name('eBanking');
+Route::get('/fixed_term_account', [AccountFinanceController::class, 'fixedAccount'])->name('fixed_account');
+Route::get('/savings_account', [AccountFinanceController::class, 'savingsAccount'])->name('savings_account');
+Route::get('/credit_card', [CreditCardController::class, 'creditCard'])->name('credit_card');
+Route::get('/debit_card', [CreditCardController::class, 'debitCard'])->name('debit_card');
+Route::get('/eBanking', [eBankingController::class, 'eBanking'])->name('eBanking');

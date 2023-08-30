@@ -701,6 +701,7 @@ Route::prefix('client')->name('client.')->namespace('Client')->group(function ()
         Route::get('/register-msme', [StartupController::class, 'index'])->name('startup.application.form');
         Route::post('/startups-register-application', [StartupController::class, 'store'])->name('startup.application.save');
         Route::post('/member-save-startup', [StartupController::class, 'saveStartupTeam'])->name('team.member.store.startup');
+        Route::post('/member-save-publication', [StartupController::class, 'savePublicationTeam'])->name('team.member.store.publication');
         Route::post('/solution-save-startup', [StartupController::class, 'saveSolutions'])->name('solution.save.startup');
 
         Route::get('/register-startup', [MsmeController::class, 'index'])->name('msme.application.form');

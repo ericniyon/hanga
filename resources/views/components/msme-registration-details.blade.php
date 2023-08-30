@@ -1,3 +1,7 @@
+@php
+    $products = \App\Models\StartupSolution::where('client_id', \auth('client')->id())->get();
+    $publications = \App\Models\StartupPublication::where('client_id', \auth('client')->id())->get();
+@endphp
 {{-- company information --}}
 <div class="card gutter-b rounded ">
     <div class="card-body">
@@ -126,7 +130,7 @@
             @if ($editable || $review)
                 <div class="col-md-12">
                     <strong>{{ __('client_registration.brief_bio') }}</strong>
-                    <p>
+                    <p style="text-align:justify">
                         {{ $model->bio }}
                     </p>
                 </div>
@@ -134,8 +138,17 @@
 
             @if ($editable || $review)
                 <div class="col-md-12">
+                    <strong>Problem</strong>
+                    <p style="text-align:justify">
+                        {{ $model->problem }}
+                    </p>
+                </div>
+            @endif
+
+            @if ($editable || $review)
+                <div class="col-md-12">
                     <strong>Mission</strong>
-                    <p>
+                    <p style="text-align:justify">
                         {{ $model->mission }}
                     </p>
                 </div>
@@ -153,8 +166,8 @@
 
     <div>
         <div class="accordion accordion-toggle-arrow" id="accordionExample2">
-            @foreach (\App\Models\StartupSolution::where('client_id', \auth('client')->id())->get() as $item)
-                <div class="card rounded">
+            @foreach ($products as $item)
+                <div class="card rounded mb-4">
                     <div class="card-header rounded">
                         <div class="card-title collapsed d-flex align-items-center justify-content-between"
                             data-toggle="collapse" data-target="#collapse2{{ $item->id }}">
@@ -184,18 +197,10 @@
                                         {{ $item->capacity }}
                                     </p>
                                 </div>
-                                @php
-                                    function startsWith($string, $startString)
-                                    {
-                                        $len = strlen($startString);
-                                        return substr($string, 0, $len) === $startString;
-                                    }
-                                    $link = startsWith($item->product_link, 'http');
-                                @endphp
                                 @if ($item->product_link)
                                     <div class="col-md-4 col-sm-12">
                                         <strong>Capacity:</strong>
-                                        <a href="{{ $link ? $item->product_link : 'http://' . $item->product_link }}"
+                                        <a href="{{ str_starts_with($item->product_link, 'http') ? $item->product_link : 'http://' . $item->product_link }}"
                                             target="_blank">
                                             {{ $item->product_link }}
                                         </a>
@@ -306,8 +311,9 @@
 {{-- Traction --}}
 <div class="card gutter-b rounded ">
     <div class="card-body">
-        <h4 class="font-weight-bolder mb-4 text-primary">Traction</h4>
+        <h4 class="font-weight-bolder mb-4 text-primary">Publications</h4>
         <div class="separator separator-dashed  mb-3"></div>
+
         <div class="row">
             <div class="col-md-4">
                 <p>
@@ -342,7 +348,7 @@
             <div class="col-md-4">
                 <p>
                     <strong> Anual Recuring Revenue </strong> <br>
-                    <span>{{ $model->anual_recuring_revenue }}</span>
+                    <span>${{ number_format($model->anual_recuring_revenue ?? 0) }}</span>
                 </p>
             </div>
             <div class="col-md-4">
@@ -359,6 +365,51 @@
                     </p>
                 </div>
             @endif
+        </div>
+
+
+        <h4 class="font-weight-bolder mb-4 mt-4 text-primary">Traction</h4>
+        <div class="accordion accordion-toggle-arrow" id="accordionExample2">
+            @foreach ($publications as $item)
+                <div class="card rounded mb-4">
+                    <div class="card-header rounded">
+                        <div class="card-title collapsed d-flex align-items-center justify-content-between"
+                            data-toggle="collapse" data-target="#collapse2{{ $item->id }}">
+                            <span>{{ $item->title }}</span>
+                            <span
+                                class="label label-inline label-light-primary rounded d-block mr-10">{{ $item->product_type }}</span>
+                        </div>
+                    </div>
+                    <div id="collapse2{{ $item->id }}" class="collapse" data-parent="#accordionExample2">
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-md-4 col-sm-12">
+                                    <strong>Title:</strong>
+                                    <p>
+                                        {{ $item->title }}
+                                    </p>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <strong>type:</strong>
+                                    <p>
+                                        {{ $item->type }}
+                                    </p>
+                                </div>
+                                @if ($item->url)
+                                    <div class="col-md-4 col-sm-12">
+                                        <strong>url:</strong><br>
+                                        <a href="{{ str_starts_with($item->url, 'http') ? $item->url : 'http://' . $item->url }}"
+                                            target="_blank">
+                                            {{ $item->title }}
+                                        </a>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
 </div>
@@ -378,7 +429,8 @@
             <div class="col-md-4">
                 <p>
                     <strong>Previous Investment Size</strong> <br>
-                    <span>{{ $model->previous_investment_size }}</span>
+                    <span>
+                        ${{ number_format($model->previous_investment_size ?? 0) }}</span>
                 </p>
             </div>
             <div class="col-md-4">
@@ -438,12 +490,12 @@
             <div class="col-md-4">
                 <p>
                     <strong> Target Investment Size</strong> <br>
-                    <span>{{ $model->target_investment_size }}</span>
+                    <span>${{ number_format($model->target_investment_size ?? 0) }}</span>
                 </p>
             </div>
             <div class="col-md-12">
                 <strong class="mb-4"> Fundraising reason/ Breakdown </strong>
-                <p>
+                <p style="text-align:justify">
                     <span>{{ $model->fundraising_breakdown }}</span>
                 </p>
             </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidateStartUpPublication;
 use App\Http\Requests\ValidateStartupRegistration;
 use App\Http\Requests\ValidateStartUpSolution;
 use App\Http\Requests\ValidateStartupTeam;
@@ -15,6 +16,7 @@ use App\Models\Sector;
 use App\Models\StartupCategory;
 use App\Models\StartupCompanyProfile;
 use App\Models\StartupCompanyTeam;
+use App\Models\StartupPublication;
 use App\Models\StartupSolution;
 use App\Models\StartupSubCategory;
 use App\Models\Village;
@@ -30,6 +32,7 @@ class StartupController extends Controller
     {
         $model = StartupCompanyProfile::where('client_id', \auth('client')->id())->first();
         $teamMembers = StartupCompanyTeam::where('client_id', \auth('client')->id())->get();
+        $publications = StartupPublication::where('client_id', \auth('client')->id())->get();
         $application_id = 0;
         $application = null;
         $selected_sub_categories = null;
@@ -60,7 +63,7 @@ class StartupController extends Controller
         $solutions  = StartupSolution::where('client_id', '=', \auth('client')->id())->latest()->get();
         $history    = $this->getLastComment(optional($application)->id);
 
-        return view('frontend.startup.startup_application', compact('categories', 'provinces', 'platforms', 'businessSectors', 'paymentMethods', 'supportServices', 'solutions', 'model', 'application', 'history'))->with(
+        return view('frontend.startup.startup_application', compact('categories', 'provinces', 'platforms', 'businessSectors', 'paymentMethods', 'supportServices', 'solutions', 'model', 'application', 'history', 'publications'))->with(
             [
                 "currentStep" => $currentStep,
                 'teamMembers' => $teamMembers,
@@ -136,6 +139,7 @@ class StartupController extends Controller
                 'mission' => $request->mission,
                 'logo' => $companyLogo,
                 'bio' => $request->business_description,
+                'problem' => $request->problem,
                 'current_step' => 1,
             ]);
             DB::commit();
@@ -158,6 +162,7 @@ class StartupController extends Controller
                 'pitch_deck' => $companypitch_deck,
                 'current_step' => $currentStep,
                 'bio' => $request->business_description,
+                'problem' => $request->problem,
 
                 // business model
                 'target_customers'  => $request->target_customers,
@@ -228,6 +233,21 @@ class StartupController extends Controller
             'active_users' => $request->active_users,
             'capacity' => $request->capacity,
             'product_link' => $request->product_link,
+        ]);
+
+        DB::commit();
+        if ($request->ajax())
+            return $model;
+        return back();
+    }
+
+    function savePublicationTeam(ValidateStartUpPublication $request)
+    {
+        $model =    StartupPublication::create([
+            'client_id'  => \auth('client')->id(),
+            'url' => $request->url,
+            'title' => $request->title,
+            'type' => $request->type,
         ]);
 
         DB::commit();

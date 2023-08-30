@@ -27,7 +27,7 @@ class CreateStartupCompanyProfilesTable extends Migration
             $table->string('number_of_employee')->nullable();
             $table->string('rdb_certificate')->nullable();
             $table->string('website')->nullable();
-            $table->string('mission')->nullable();
+            $table->text('mission')->nullable();
             $table->text('problem')->nullable();
             $table->string('logo')->nullable();
             $table->text('bio')->nullable();

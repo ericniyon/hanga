@@ -22,7 +22,7 @@ class CreateStartupCompanyTeamsTable extends Migration
             $table->string('team_email')->nullable();
             $table->string('team_position')->nullable();
             $table->string('team_linkedin')->nullable();
-            $table->string('team_description')->nullable();
+            $table->text('team_description')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

@@ -51,15 +51,15 @@
     </div>
     <!--end::Title-->
     <div class="w-md-150px w-100">
-        <a href="{{ route('v2.client.details', encryptId($item->id)) }}"
+        <a href="{{ route('v2.client.details', encryptId($item->client_id)) }}"
             class="btn btn-outline-info rounded border-2 my-2 w-md-150px w-100">
             {{ __('app.View Details') }}
         </a>
-        @if (auth('client')->check())
+        {{-- @if (auth('client')->check())
             <button type="button" class="btn btn-outline-primary rounded border-2 my-2 w-md-150px w-100">
                 Connect
             </button>
             @include('partials.v2._connect_button', ['item' => $item])
-        @endif
+        @endif --}}
     </div>
 </div>

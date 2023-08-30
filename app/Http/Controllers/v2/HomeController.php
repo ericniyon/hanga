@@ -82,6 +82,8 @@ class HomeController extends Controller
             return redirect()->route('v2.dsp.details', encryptId($client->id));
         } elseif ($client->registration_type_id == RegistrationType::iWorkerId) {
             return redirect()->route('v2.iworker.details', encryptId($client->id));
+        } elseif ($client->registration_type_id == RegistrationType::STARTUP_ID) {
+            return redirect()->route('v2.msme.details', encryptId($client->id));
         }
         return back();
     }

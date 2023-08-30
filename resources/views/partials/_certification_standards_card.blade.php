@@ -1,5 +1,5 @@
 @php
-    $team = \App\Models\StartupCompanyTeam::where('client_id', '=', $model->id ?? 0)
+    $team = \App\Models\StartupCompanyTeam::where('client_id', '=', \auth('client')->id() ?? 0)
         ->latest()
         ->get();
 @endphp
@@ -9,7 +9,7 @@
         <h4 class="font-weight-bolder mb-4 text-primary">Team</h4>
         <div class="accordion accordion-toggle-arrow rounded " id="awardAccordion">
             @forelse($team as $item)
-                <div class="card rounded">
+                <div class="card rounded mb-3">
                     <div class="card-header rounded">
                         <div class="card-title collapsed d-flex align-items-center justify-content-between"
                             data-toggle="collapse" data-target="#award{{ $item->id }}">
@@ -54,7 +54,7 @@
                 </div>
             @empty
                 <div class="alert bg-light-info rounded">
-                    {{ __('app.No certification / Standard / Award added yet') }}
+                    No Team Mate Added Yet!
                 </div>
             @endforelse
         </div>

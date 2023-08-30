@@ -13,7 +13,7 @@
                 <div class="h-80px bg-light-light w-100 rounded d-none d-md-block"></div>
 
                 <div class="px-4 mt-md-n15 mt-0" style="z-index: 2001;top: 20px;background-color: rgba(255,255,255,0.1);">
-                    <span class="badge bg-light-info rounded-pill">STARTUP</span>
+                    <span class="badge bg-light-info rounded-pill">MSME</span>
                     <div class="row">
                         <div class="col-md-12">
                             <div>
@@ -22,7 +22,7 @@
                                     <div
                                         class="symbol symbol-60 symbol-xl-100 symbol-xxl-150 mr-5 align-self-start align-self-xxl-start mt-2">
                                         <div class="symbol-label rounded-lg shadow-sm"
-                                            style="background-image:url('{{ Storage::disk('logos')->url($model->logo) }}');background-size: contain">
+                                            style="background-image:url('{{ $client->profile_photo_url }}');background-size: contain">
                                         </div>
                                     </div>
                                     <div class="d-flex flex-column">
@@ -239,7 +239,7 @@
                 </div>
 
                 <div class="row my-4">
-                    {{-- <div class="col-md-6">
+                    <div class="col-md-6">
                         <span class="svg-icon text-info">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
@@ -259,7 +259,7 @@
                         {{ optional($model->sector)->name }}
                         <span class="text-dark font-weight-bolder">{{ __('client_registration.cell') }}:</span>
                         {{ optional($model->cell)->name }}
-                    </div> --}}
+                    </div>
                     <div class="col-md-3">
                         <span class="svg-icon text-info">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -269,8 +269,8 @@
                             </svg>
                         </span>
                         {{ __('client_registration.phone') }}:
-                        <a href="tel:{{ $model->phone }}" class="text-dark">
-                            {{ $model->phone }}
+                        <a href="tel:{{ $model->company_phone }}" class="text-dark">
+                            {{ $model->company_phone }}
                         </a>
                     </div>
                     <div class="col-md-3">
@@ -282,8 +282,8 @@
                             </svg>
                         </span>
                         {{ __('client_registration.email') }}:
-                        <a href="mailto:{{ $model->email }}" class="text-dark">
-                            {{ $model->email }}
+                        <a href="mailto:{{ $model->company_email }}" class="text-dark">
+                            {{ $model->company_email }}
                         </a>
                     </div>
                 </div>
@@ -293,12 +293,23 @@
                         <!-- Nav tabs -->
                         <ul class="nav nav-pills custom-navs justify-content-between border-bottom border-bottom-light"
                             id="myTab" role="tablist">
-
+                            {{-- <li class="nav-item">
+                                <a class="nav-link rounded-0 text-dark-75 font-weight-bold active" id="home-tab"
+                                    data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                                    aria-selected="true">
+                                    {{ __('client_registration.company_details') }}
+                                </a>
+                            </li> --}}
                             <li class="nav-item">
                                 <a class="nav-link rounded-0 text-dark-75 font-weight-bold active" id="messages-tab"
                                     data-toggle="tab" href="#messages" role="tab" aria-controls="messages"
                                     aria-selected="false">{{ __('app.expertise_Interests') }}</a>
                             </li>
+                            {{-- <li class="nav-item">
+                                <a class="nav-link rounded-0 text-dark-75 font-weight-bold" data-toggle="tab"
+                                    href="#representative_details" role="tab" aria-controls="messages"
+                                    aria-selected="false">{{ __('client_registration.representative_details') }}</a>
+                            </li> --}}
                             <li class="nav-item">
                                 <a class="nav-link rounded-0 text-dark-75 font-weight-bold" id="settings-tab"
                                     data-toggle="tab" href="#settings" role="tab" aria-controls="settings"
@@ -329,7 +340,138 @@
 
                         <!-- Tab panes -->
                         <div class="tab-content container-fluid">
+                            {{-- <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
+                                <div class="row my-5">
+                                    <div class="col-md-6">
+                                        <p>
+                                            <strong>{{ __('client_registration.company_name') }}:</strong> <br>
+                                            <span>{{ $model->company_name }}</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>
+                                            <strong class="d-block font-weight-bolder">
+                                                {{ __('client_registration.company_categories') }}
+                                            </strong>
+                                            @forelse($application->categories as $item)
+                                                <span
+                                                    class="badge badge-secondary rounded-pill my-1">{{ $item->name }}</span>
+                                            @empty
+                                                <span class="label label-inline label-light-info">None</span>
+                                            @endforelse
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>
+                                            <strong>{{ __('client_registration.tin') }}:</strong>
+                                            <span>{{ $model->tin }}</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>
+                                            <strong>{{ __('client_registration.phone_number') }} :</strong>
+                                            <span><a
+                                                    href="tel:{{ $model->company_phone }}">{{ $model->company_phone }}</a></span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>
+                                            <strong>{{ __('client_registration.email') }} :</strong>
+                                            <span>
+                                                <a
+                                                    href="mailto:{{ $model->company_email }}">{{ $model->company_email }}</a>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>
+                                            <strong>{{ __("client_registration.registration_date") }} :</strong>
+                                            <span>{{ optional($model->registration_date)->toDateString() }}</span>
+                                        </p>
+                                    </div>
+
+                                    @if ($editable)
+                                        <div class="col-md-6">
+                                            <p class="d-flex align-items-center">
+                                                <strong
+                                                    class="mr-4">{{ __('client_registration.rdb_certificate') }}</strong>
+                                                @if ($model->rdb_certificate)
+                                                    <a href="{{ route('msme.download.file', ['id' => encryptId($model->id), 'type' => 'rdb']) }}"
+                                                        target="_blank" data-toggle="tooltip"
+                                                        title="{{ __('client_registration.download') }}"
+                                                        class="btn btn-sm btn-light-primary rounded py-1 font-weight-bolder">
+                                                        @include('partials.buttons._svg_download_icon')
+                                                        <span class="d-none d-md-inline">
+                                                            {{ __('client_registration.download') }}
+                                                        </span>
+                                                    </a>
+                                                @else
+                                                    N/A
+                                                @endif
+                                            </p>
+                                        </div>
+                                    @endif
+                                    <div class="col-md-6">
+                                        <p>
+                                            <strong>{{ __('client_registration.number_of_employees') }} :</strong>
+                                            <span>{{ $model->number_of_employees }}</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>
+                                            <strong
+                                                class="d-block font-weight-bolder">{{ __('app.business_sector') }}</strong>
+                                            @forelse($application->businessSectors as $item)
+                                                <span
+                                                    class="badge badge-secondary rounded-pill my-1">{{ $item->name }}</span>
+                                            @empty
+                                                <span class="label label-inline label-light-info">
+                                                    {{ __('app.none') }}
+                                                </span>
+                                            @endforelse
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>
+                                            <strong class="d-block font-weight-bolder">
+                                                {{ __('client_registration.which_payment_does_your_business_offer') }}
+                                            </strong>
+                                            @forelse($model->paymentMethods as $item)
+                                                <span
+                                                    class="badge badge-secondary rounded-pill my-1">{{ $item->name }}</span>
+                                            @empty
+                                                <span class="label label-inline label-light-info">
+                                                    {{ __('app.none') }}
+                                                </span>
+                                            @endforelse
+                                        </p>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <p>
+                                            <strong class="d-block font-weight-bolder">
+                                                {{ __('app.Digital platforms used to sell goods/services') }}
+                                            </strong>
+                                            @forelse($model->digitalPlatforms as $item)
+                                                <span
+                                                    class="badge badge-secondary rounded-pill my-1">{{ $item->name }}</span>
+                                            @empty
+                                                <span class="label label-inline label-light-info">
+                                                    {{ __('app.none') }}
+                                                </span>
+                                            @endforelse
+                                        </p>
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <strong>{{ __('client_registration.brief_bio') }}</strong>
+                                        <p>
+                                            {{ optional($model->application)->bio ?? __('app.none') }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div> --}}
                             <div class="tab-pane py-4 active" id="messages" role="tabpanel"
                                 aria-labelledby="messages-tab">
                                 <div>
@@ -337,7 +479,7 @@
                                 </div>
                                 <div>
                                     <h6>
-                                        @if ($model->registration_type == \App\Models\RegistrationType::STARTUP)
+                                        @if ($model->registration_type == \App\Models\RegistrationType::MSME)
                                             {{ __('app.category_digital_services_interested_in') }}
                                         @else
                                             {{ __('app.area_of_expertise') }}
@@ -346,7 +488,7 @@
                                     </h6>
                                     <p>
 
-                                        @forelse($businessSectors as $item)
+                                        @forelse($model->services as $item)
                                             <span
                                                 class="badge badge-secondary rounded-pill my-1">{{ $item->name }}</span>
                                         @empty
@@ -355,7 +497,50 @@
                                     </p>
                                 </div>
                             </div>
+                            {{-- <div class="tab-pane" id="representative_details" role="tabpanel"
+                                aria-labelledby="representative_details">
+                                <div class="row my-4">
+                                    <div class="col-md-6">
+                                        <p>
+                                            <strong>{{ __('client_registration.representative_name') }}:</strong>
+                                            <span>{{ $model->representative_name }}</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>
+                                            <strong>{{ __('client_registration.phone') }}:</strong>
+                                            <a href="tel:{{ $model->representative_phone }}"
+                                                class="text-info">{{ $model->representative_phone }}</a>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>
+                                            <strong>{{ __('client_registration.email') }}:</strong>
+                                            <a href="mailto:{{ $model->representative_email }}"
+                                                class="text-info">{{ $model->representative_email }}</a>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>
+                                            <strong>{{ __('client_registration.position') }}:</strong>
+                                            <span>{{ $model->representative_position }}</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>
+                                            <strong>{{ __('client_registration.gender') }}:</strong>
+                                            <span>{{ $model->representative_gender }}</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>
+                                            <strong>{{ __('client_registration.physical_disability') }}:</strong>
+                                            <span>{{ $model->representative_physical_disability ?? 'N/A' }}</span>
+                                        </p>
+                                    </div>
+                                </div>
 
+                            </div> --}}
                             <div class="tab-pane py-4" id="settings" role="tabpanel" aria-labelledby="settings-tab">
                                 @php
                                     $awards = \App\Models\CertificationAward::where('application_id', '=', $model->application_id ?? 0)
@@ -369,6 +554,14 @@
                                             ({{ $awards->count() }})
                                         </h6>
 
+                                        {{-- @if ($application->can_update_info && $editable)
+                                             <button type="button"
+                                                     class="btn btn-sm btn-light-info rounded-pill btn-hover-text-white font-weight-bolder"
+                                                     id="addCertificateButton">
+                                                 @include('partials._plus_icon')
+                                                 Add New
+                                             </button>
+                                         @endif --}}
                                     </div>
                                     <div class="accordion accordion-toggle-arrow rounded " id="awardAccordion">
                                         @forelse($awards as $item)
@@ -441,7 +634,7 @@
                                     <h4 class="font-weight-bolder mb-0">
                                         {{ __('client_registration.products') }}
                                         / {{ __('client_registration.solutions') }}
-                                        ({{ $solutions->count() }})
+                                        ({{ $application->applicationSolutions->count() }})
                                     </h4>
 
                                     {{--  @if ($application->canUpdateInfo && $editable)
@@ -456,7 +649,7 @@
 
 
                                 <div class="accordion accordion-toggle-arrow" id="accrodionProductServices">
-                                    @foreach ($solutions as $item)
+                                    @foreach ($application->applicationSolutions as $item)
                                         <div class="card rounded">
                                             <div class="card-header rounded">
                                                 <div class="card-title collapsed d-flex align-items-center justify-content-between"
@@ -464,7 +657,7 @@
                                                     data-target="#productService{{ $item->id }}">
                                                     <span>{{ $item->name }}</span>
                                                     <span
-                                                        class="label label-inline label-light-{{ $item->typeColor }} rounded-pill d-block mr-10">{{ $item->product_type }}</span>
+                                                        class="label label-inline label-light-{{ $item->typeColor }} rounded-pill d-block mr-10">{{ $item->type }}</span>
                                                 </div>
                                             </div>
                                             <div id="productService{{ $item->id }}" class="collapse"
@@ -476,11 +669,11 @@
                                                             class="d-block">{{ __('client_registration.description') }}</strong>
                                                         <p>{{ $item->description }}</p>
                                                     </div>
-                                                    {{-- @if ($application)
+                                                    @if ($application->canUpdateInfo && $editable)
                                                         <div class="d-flex align-items-center justify-content-start">
                                                             <button type="button" data-id="{{ $item->id }}"
                                                                 data-name="{{ $item->name }}"
-                                                                data-type="{{ $item->product_type }}"
+                                                                data-type="{{ $item->type }}"
                                                                 data-description="{{ $item->description }}"
                                                                 data-toggle="tooltip" title="Edit"
                                                                 class="btn btn-sm btn-light-info js-edit rounded-pill mr-4">
@@ -489,14 +682,14 @@
                                                             <a href="{{ route('client.solutions.destroy', encryptId($item->id)) }}"
                                                                 data-id="{{ $item->id }}"
                                                                 data-name="{{ $item->name }}"
-                                                                data-type="{{ $item->product_type }}"
+                                                                data-type="{{ $item->type }}"
                                                                 data-description="{{ $item->description }}"
                                                                 data-toggle="tooltip" title="Delete"
                                                                 class="btn btn-sm btn-light-danger js-delete rounded-pill">
                                                                 @include('partials.buttons._trash_svg_icon')
                                                             </a>
                                                         </div>
-                                                    @endif --}}
+                                                    @endif
 
                                                 </div>
                                             </div>

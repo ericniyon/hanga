@@ -43,6 +43,7 @@ class ValidateStartupRegistration extends FormRequest
             'tin'                   => ['required_if:current_step,1', 'regex:/^[0-9]+$/', 'min:9', 'max:9'],
             'mission'               => ['required', 'max:800'],
             'business_description'  => ['required', 'max:800'],
+            'problem'               => ['required', 'max:800'],
             'company_phone'         => ['required', 'string'],
             'company_email'         => ['required', 'string', 'email',],
             'registration_date'     => ['required', 'date', 'before_or_equal:' . today()->format('Y-m-d')],
