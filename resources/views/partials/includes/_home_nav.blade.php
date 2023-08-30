@@ -142,7 +142,8 @@
                     href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                     v-pre style="background: #F4CE9B !important; border-radius: 50px; ">
                     <div class="symbol symbol-30 symbol-lg-30 symbol-circle ">
-                        <img alt="Pic" src="{{ Storage::disk('logos')->url($clientsFields->logo) }}"
+                        <img alt="Pic"
+                            src="{{ $clientsFields->logo ? Storage::disk('logos')->url($clientsFields->logo) : '' }}"
                             style="display: inline-block; " />
                         <span class="" style="color:#2A337E">
                             {{ __('app.My Profile') }}

@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Static Template</title>
+    <title>{{ $model->company_name }} One Pager</title>
 </head>
 
 <body style="padding: 1rem;">
@@ -13,7 +13,11 @@
         <tr>
             <td colspan="5">
                 <center>
-                    <img src="{{ Storage::disk('logos')->url($model->logo) }}" style="width: 3rem;" alt="" />
+                    @if ($model->logo)
+                        <img src="{{ Storage::disk('logos')->url($model->logo) }}" style="width: 3rem;" alt="" />
+                    @else
+                        <span>No logo</span>
+                    @endif
                 </center>
             </td>
             <td>&nbsp;</td>
