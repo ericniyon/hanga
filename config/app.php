@@ -169,7 +169,8 @@ return [
         /*
          * Package Service Providers...
          */
-        Barryvdh\Snappy\ServiceProvider::class,
+        // Barryvdh\Snappy\ServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -237,7 +238,8 @@ return [
         'Share' => Jorenvh\Share\ShareFacade::class,
 
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
-        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        // 'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
     ],
 

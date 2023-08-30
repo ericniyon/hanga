@@ -12,11 +12,11 @@ class PDFController extends Controller
 {
     function downloadOnePager($id)
     {
-        $model  =   StartupCompanyProfile::where('client_id', \auth('client')->id())->first();
-        $products  =   StartupSolution::where('client_id', \auth('client')->id())->get();
-        $team  =   StartupCompanyTeam::where('client_id', \auth('client')->id())->get();
+        $model      =   StartupCompanyProfile::where('client_id', \auth('client')->id())->first();
+        $products   =   StartupSolution::where('client_id', \auth('client')->id())->get();
+        $team       =   StartupCompanyTeam::where('client_id', \auth('client')->id())->get();
 
         $pdf = PDF::loadView('partials.pdf.one-page', compact('model', 'products', 'team'));
-        return $pdf->download('invoice.pdf');
+        return $pdf->download($model->company_name . '.pdf');
     }
 }

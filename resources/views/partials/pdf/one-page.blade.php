@@ -13,8 +13,7 @@
         <tr>
             <td colspan="5">
                 <center>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/2048px-Instagram_logo_2022.svg.png"
-                        style="width: 3rem;" alt="" />
+                    <img src="{{ Storage::disk('logos')->url($model->logo) }}" style="width: 3rem;" alt="" />
                 </center>
             </td>
             <td>&nbsp;</td>
@@ -77,7 +76,7 @@
             <td colspan="7">
                 <span style="font-weight: 700;">Revenue Stream</span>
                 <p class="text-justify text-xs">
-                    {{$model->revenue_stream}}
+                    {{ $model->revenue_stream }}
                 </p>
             </td>
         </tr>
@@ -206,7 +205,7 @@
                 <span style="font-weight: 700;">Fund Raising <span
                         style="color: #004e71;">${{ number_format($model->target_investment_size) }}</span></span>
                 <p class="text-justify text-xs mt-3">
-                    {{$model->fundraising_breakdown}}
+                    {{ $model->fundraising_breakdown }}
                 </p>
             </td>
         </tr>

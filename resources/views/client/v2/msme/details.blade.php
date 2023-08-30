@@ -222,7 +222,7 @@
                         </div>
                         <div class="col-md-6">
                             <div
-                                class="d-flex align-items-md-end align-items-center flex-column justify-content-center pt-8">
+                                class="d-flex align-items-md-end align-items-center flex-column justify-content-center pt-8 mb-4">
                                 @if ($model->website)
                                     <a href="{{ $model->website }}" target="_blank"
                                         class="btn btn-primary text-white w-100 my-2 w-md-150px border-2 rounded shadow">
@@ -230,9 +230,9 @@
                                     </a>
                                 @endif
 
-                                @if (auth()->guard('client')->check())
+                                {{-- @if (auth()->guard('client')->check())
                                     @include('partials.v2._connect_button', ['item' => $client])
-                                @endif
+                                @endif --}}
                             </div>
                         </div>
                     </div>
