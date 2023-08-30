@@ -19,15 +19,11 @@
                                 @foreach (\App\Models\RegistrationType::query()->orderBy('id')->get() as $item)
                                     <div class="d-flex flex-column my-5">
                                         <a href="{{ route('client.apply.now', ['type' => $item->name]) }}"
+                                            {{ $item->name == 'STARTUP' ? '' : 'hidden' }}
                                             class="btn btn-outline-primary border-2 text-hover-white rounded-lg">
-                                            @if ($item->name == 'DSP')
-                                                Tech Business
-                                            @elseif ($item->name == 'MSME')
-                                                Busines Directory
-                                            @elseif ($item->name == 'STARTUP')
+
+                                            @if ($item->name == 'STARTUP')
                                                 Startup
-                                            @else
-                                                {{ __('app.' . $item->name) }}
                                             @endif
                                         </a>
                                         <p class="text-center text-dark-75 mt-3">

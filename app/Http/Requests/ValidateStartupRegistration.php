@@ -88,9 +88,9 @@ class ValidateStartupRegistration extends FormRequest
             'company_email.required_if' => $errorMessage,
             'registration_date.required_if' => $errorMessage,
             'rdb_certificate.required_if' => $errorMessage,
+            'pitch_deck.required_if' => $errorMessage,
             'number_of_employees.required_if' => $errorMessage,
             'company_category.required_if' => $errorMessage,
-
 
             'team_firstname.required_if' => $errorMessage,
             'team_lastname.required_if' => $errorMessage,
