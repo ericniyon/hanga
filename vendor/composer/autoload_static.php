@@ -188,10 +188,6 @@ class ComposerStaticInitf2f22824e8ad1705fb551409b905cb45
             'Laravel\\Sail\\' => 13,
             'L5Swagger\\' => 10,
         ),
-        'K' => 
-        array (
-            'Knp\\Snappy\\' => 11,
-        ),
         'J' => 
         array (
             'Jorenvh\\Share\\' => 14,
@@ -264,7 +260,6 @@ class ComposerStaticInitf2f22824e8ad1705fb551409b905cb45
         array (
             'Brick\\Math\\' => 11,
             'BeyondCode\\LaravelWebSockets\\' => 29,
-            'Barryvdh\\Snappy\\' => 16,
             'Barryvdh\\LaravelIdeHelper\\' => 26,
             'Barryvdh\\DomPDF\\' => 16,
             'Barryvdh\\Debugbar\\' => 18,
@@ -658,10 +653,6 @@ class ComposerStaticInitf2f22824e8ad1705fb551409b905cb45
         array (
             0 => __DIR__ . '/..' . '/darkaonline/l5-swagger/src',
         ),
-        'Knp\\Snappy\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy',
-        ),
         'Jorenvh\\Share\\' => 
         array (
             0 => __DIR__ . '/..' . '/jorenvanhocht/laravel-share/src',
@@ -846,10 +837,6 @@ class ComposerStaticInitf2f22824e8ad1705fb551409b905cb45
         'BeyondCode\\LaravelWebSockets\\' => 
         array (
             0 => __DIR__ . '/..' . '/beyondcode/laravel-websockets/src',
-        ),
-        'Barryvdh\\Snappy\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src',
         ),
         'Barryvdh\\LaravelIdeHelper\\' => 
         array (
@@ -1576,15 +1563,6 @@ class ComposerStaticInitf2f22824e8ad1705fb551409b905cb45
         'Barryvdh\\Reflection\\DocBlock\\Tag\\VarTag' => __DIR__ . '/..' . '/barryvdh/reflection-docblock/src/Barryvdh/Reflection/DocBlock/Tag/VarTag.php',
         'Barryvdh\\Reflection\\DocBlock\\Tag\\VersionTag' => __DIR__ . '/..' . '/barryvdh/reflection-docblock/src/Barryvdh/Reflection/DocBlock/Tag/VersionTag.php',
         'Barryvdh\\Reflection\\DocBlock\\Type\\Collection' => __DIR__ . '/..' . '/barryvdh/reflection-docblock/src/Barryvdh/Reflection/DocBlock/Type/Collection.php',
-        'Barryvdh\\Snappy\\Facades\\SnappyImage' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/Facades/SnappyImage.php',
-        'Barryvdh\\Snappy\\Facades\\SnappyPdf' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/Facades/SnappyPdf.php',
-        'Barryvdh\\Snappy\\IlluminateSnappyImage' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/IlluminateSnappyImage.php',
-        'Barryvdh\\Snappy\\IlluminateSnappyPdf' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/IlluminateSnappyPdf.php',
-        'Barryvdh\\Snappy\\ImageWrapper' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/ImageWrapper.php',
-        'Barryvdh\\Snappy\\LumenServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/LumenServiceProvider.php',
-        'Barryvdh\\Snappy\\PdfFaker' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/PdfFaker.php',
-        'Barryvdh\\Snappy\\PdfWrapper' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/PdfWrapper.php',
-        'Barryvdh\\Snappy\\ServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-snappy/src/ServiceProvider.php',
         'BeyondCode\\LaravelWebSockets\\Apps\\App' => __DIR__ . '/..' . '/beyondcode/laravel-websockets/src/Apps/App.php',
         'BeyondCode\\LaravelWebSockets\\Apps\\AppProvider' => __DIR__ . '/..' . '/beyondcode/laravel-websockets/src/Apps/AppProvider.php',
         'BeyondCode\\LaravelWebSockets\\Apps\\ConfigAppProvider' => __DIR__ . '/..' . '/beyondcode/laravel-websockets/src/Apps/ConfigAppProvider.php',
@@ -4645,11 +4623,6 @@ class ComposerStaticInitf2f22824e8ad1705fb551409b905cb45
         'Jorenvh\\Share\\Share' => __DIR__ . '/..' . '/jorenvanhocht/laravel-share/src/Share.php',
         'Jorenvh\\Share\\ShareFacade' => __DIR__ . '/..' . '/jorenvanhocht/laravel-share/src/ShareFacade.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
-        'Knp\\Snappy\\AbstractGenerator' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/AbstractGenerator.php',
-        'Knp\\Snappy\\Exception\\FileAlreadyExistsException' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/Exception/FileAlreadyExistsException.php',
-        'Knp\\Snappy\\GeneratorInterface' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/GeneratorInterface.php',
-        'Knp\\Snappy\\Image' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/Image.php',
-        'Knp\\Snappy\\Pdf' => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy/Pdf.php',
         'L5Swagger\\ConfigFactory' => __DIR__ . '/..' . '/darkaonline/l5-swagger/src/ConfigFactory.php',
         'L5Swagger\\Console\\GenerateDocsCommand' => __DIR__ . '/..' . '/darkaonline/l5-swagger/src/Console/GenerateDocsCommand.php',
         'L5Swagger\\Exceptions\\L5SwaggerException' => __DIR__ . '/..' . '/darkaonline/l5-swagger/src/Exceptions/L5SwaggerException.php',

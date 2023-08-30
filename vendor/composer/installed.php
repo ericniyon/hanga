@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '281b34e69e4590758daf634a77e4e04714b5d36b',
+        'reference' => 'a45ac65f94ac7a29883c86217acf9cbd3ea68d43',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -54,15 +54,6 @@
             'install_path' => __DIR__ . '/../barryvdh/laravel-ide-helper',
             'aliases' => array(),
             'dev_requirement' => true,
-        ),
-        'barryvdh/laravel-snappy' => array(
-            'pretty_version' => 'v1.0.0',
-            'version' => '1.0.0.0',
-            'reference' => '2c18a3602981bc6f25b32908cf8aaa05952ab2f7',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../barryvdh/laravel-snappy',
-            'aliases' => array(),
-            'dev_requirement' => false,
         ),
         'barryvdh/reflection-docblock' => array(
             'pretty_version' => 'v2.1.0',
@@ -631,15 +622,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'knplabs/knp-snappy' => array(
-            'pretty_version' => 'v1.4.2',
-            'version' => '1.4.2.0',
-            'reference' => 'b66f79334421c26d9c244427963fa2d92980b5d3',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../knplabs/knp-snappy',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'kodova/hamcrest-php' => array(
             'dev_requirement' => true,
             'replaced' => array(
@@ -667,7 +649,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '281b34e69e4590758daf634a77e4e04714b5d36b',
+            'reference' => 'a45ac65f94ac7a29883c86217acf9cbd3ea68d43',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
