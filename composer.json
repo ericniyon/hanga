@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.4|^8.0",
         "ext-json": "*",
+        "barryvdh/laravel-dompdf": "^2.0",
         "barryvdh/laravel-snappy": "^1.0",
         "beyondcode/laravel-websockets": "^1.12",
         "darkaonline/l5-swagger": "^8.3",
