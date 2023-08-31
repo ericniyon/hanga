@@ -47,9 +47,9 @@ class ValidateStartupRegistration extends FormRequest
             'company_phone'         => ['required', 'string'],
             'company_email'         => ['required', 'string', 'email',],
             'registration_date'     => ['required', 'date', 'before_or_equal:' . today()->format('Y-m-d')],
-            'rdb_certificate'       => ['nullable', 'mimes:jpg,jpeg,pdf,png', 'max:2000'],
-            'logo'                  => ['nullable', 'mimes:jpg,jpeg,pdf,png', 'max:2000'],
-            'pitch_deck'            => ['nullable', 'mimes:ppt,pptx', 'max:2048'],
+            'rdb_certificate'       => ['nullable', 'mimes:jpg,jpeg,pdf,png', 'max:2048'],
+            'logo'                  => ['nullable', 'mimes:jpg,jpeg,pdf,png', 'max:2048'],
+            'pitch_deck'            => ['nullable', 'mimes:ppt,pptx'],
             'company_category'      => ['required', 'min:1'],
 
             // step 4

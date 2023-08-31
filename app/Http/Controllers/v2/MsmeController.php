@@ -35,7 +35,8 @@ class MsmeController extends Controller
         $google_ratings = GoogleRatings::where('client_id', $client->id)->count();
 
         $registrationTypes = RegistrationType::with('categories')->whereHas('categories')->get();
-        $selected_interests = StartupSubCategory::all();
+        $category = StartupCategory::where('id', $MSMERegistration->category_id)->first();
+        $subCategory = StartupSubCategory::where('id', $MSMERegistration->sub_category_id)->first();
 
         $teamMembers = StartupCompanyTeam::where('client_id', $client->id)->get();
         $publications = StartupPublication::where('client_id', $client->id)->get();
@@ -47,14 +48,15 @@ class MsmeController extends Controller
             'review'            => false,
             'client'            => $client,
             'editable'          => false,
+            'category'          => $category,
             'solutions'         => $solutions,
+            'subCategory'       => $subCategory,
             'application'       => $application,
             'teamMembers'       => $teamMembers,
             'publications'      => $publications,
             'google_ratings'    => $google_ratings,
-            'businessSectors'   => $selected_interests,
+            'businessSectors'   => $category,
             'registrationTypes' => $registrationTypes,
-            'selected_interests' => $selected_interests,
         ]);
     }
 }

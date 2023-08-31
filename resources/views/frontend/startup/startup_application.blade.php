@@ -319,7 +319,7 @@
                                                     <label for="problem" class="d-block font-weight-bolder">
                                                         Problem
                                                     </label>
-                                                    <textarea class="form-control" name="problem" id="problem" x-model="content" placeholder="Problem">{{ $model == null ? '' : $model->problem }}</textarea>
+                                                    <textarea class="form-control" name="problem" id="problem"placeholder="Problem">{{ $model == null ? '' : $model->problem }}</textarea>
                                                 </div>
                                             </div>
                                         </div>

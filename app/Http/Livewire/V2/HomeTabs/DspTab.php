@@ -86,7 +86,7 @@ class DspTab extends Component
     {
         $search = trim($this->search);
 
-        $clients = StartupCompanyProfile::orWhere('company_name', 'like', '%' . $search . '%')
+        $clients = StartupCompanyProfile::orWhere('LOWER(company_name)', 'like', '%' . $search . '%')
             ->paginate(10);
 
         $businessSectors = BusinessSector::query()
