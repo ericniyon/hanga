@@ -8,32 +8,21 @@
     <title>{{ $model->company_name }} One Pager</title>
 </head>
 
-<body style="padding: 1rem; border:1px solid;">
-    <center style="margin-bottom:3rem">
-        <span style="font-weight:bold; font-size:18px;text-transform:uppercase">
-            {{ $model->company_name }} - One Pager
-            <hr width="350">
-        </span>
-    </center>
-    <table width="100%" border="0">
-
+<body style="padding: 1rem;">
+    <table width="100%">
         <tr>
-            <td colspan="6">
+            <td colspan="5">
                 <center>
                     @if ($model->logo)
-                        <img src="{{ Storage::disk('logos')->url($model->logo) }}" style="width: 3rem;"
-                            alt="" />
-                        {{-- <img src="https://img.freepik.com/premium-vector/mb-logo-design_731343-151.jpg?w=360"
-                        style="width: 3rem;" alt="" /> --}}
-                        {{-- {{-- @else --}}
+                        <img src="{{ Storage::disk('logos')->url($model->logo) }}" style="width: 3rem;" alt="" />
+                    @else
                         <span>No logo</span>
                     @endif
                 </center>
             </td>
-            <td rowspan="14" style="border-right:1px solid"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td>&nbsp;</td>
             <td colspan="7">
                 <span style="font-weight: 700;">About</span>
-                <hr>
                 <p class="text-justify text-xs">
                     {{ $model->bio }}
                 </p>
@@ -54,7 +43,6 @@
             </td>
             <td colspan="7">
                 <span style="font-weight: 700;">Mission</span>
-                <hr>
                 <p class="text-justify text-xs">
                     {{ $model->mission }}
                 </p>
@@ -67,14 +55,13 @@
             <td colspan="6">
                 <div class="mt-4 flex flex-col">
                     <span style="font-weight: 700;">Contact</span><br>
-                    <span style="font-size: 12px !important">{{ $model->phone }}</span><br>
-                    <span style="font-size: 12px !important">{{ $model->email }}</span><br>
-                    <span style="font-size: 12px !important">{{ $model->website }}</span><br>
+                    <span class="text-sm">{{ $model->phone }}</span>
+                    <span class="text-sm">{{ $model->email }}</span>
+                    <span class="text-sm">{{ $model->website }}</span>
                 </div>
             </td>
             <td colspan="7">
                 <span style="font-weight: 700;">Problem</span>
-                <hr>
                 <p class="text-justify text-xs">
                     {{ $model->problem }}
                 </p>
@@ -92,7 +79,6 @@
             </td>
             <td colspan="7">
                 <span style="font-weight: 700;">Revenue Stream</span>
-                <hr>
                 <p class="text-justify text-xs">
                     {{ $model->revenue_stream }}
                 </p>
@@ -104,7 +90,7 @@
                 <span style="font-weight: 700;">Team</span>
                 <ul>
                     @foreach ($team as $item)
-                        <li style="font-size: 12px !important">{{ $item->team_firstname }} {{ $item->team_lastname }}
+                        <li class="text-sm">{{ $item->team_firstname }} {{ $item->team_lastname }}
                             ({{ $item->team_position }})
                         </li>
                     @endforeach
@@ -112,7 +98,6 @@
             </td>
             <td colspan="7">
                 <span style="font-weight: 700;">Target Customers</span>
-                <hr>
                 <p class="text-justify text-xs">
                     {{ $model->target_customers }}
                 </p>
@@ -121,15 +106,15 @@
         <tr>
             <td colspan="5"></td>
             <td>&nbsp;</td>
-            <td colspan="3">
+            <td colspan="4">
                 <div
                     style="
               background-color: #06affd;
               color: white;
               border-radius: 0.4rem;
-              padding: 1rem; 
+              padding: 1rem;
             ">
-                    <table>
+                    <table width="100%">
                         <tr>
                             <td>
                                 <span style="font-weight: 700;">Anual Revenue: </span>
@@ -175,7 +160,7 @@
                   border-radius: 0.4rem;
                   padding: 1rem;
                 ">
-                            <table>
+                            <table width="100%">
                                 <tr>
                                     <td>
                                         <span style="font-weight: 700;">Business Model: </span>
@@ -223,7 +208,6 @@
             <td colspan="7">
                 <span style="font-weight: 700;">Fund Raising <span
                         style="color: #004e71;">${{ number_format($model->target_investment_size) }}</span></span>
-                <hr>
                 <p class="text-justify text-xs mt-3">
                     {{ $model->fundraising_breakdown }}
                 </p>
