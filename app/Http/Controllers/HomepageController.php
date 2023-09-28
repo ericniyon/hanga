@@ -35,7 +35,6 @@ class HomepageController extends Controller
         })->latest()->take(5)->get();
         $jobs = JobOpportunity::query()->limit(5)->orderByDesc("id")->get();
         $partners = Partner::query()->limit(20)->orderByDesc("id")
-//            ->limit(3)
             ->get();
 
 
